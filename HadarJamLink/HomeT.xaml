@@ -22,7 +22,7 @@
             <StackPanel>
 
                 <TextBlock Text="JamLink"
-                       FontFamily="Arial" 
+                       FontFamily="{StaticResource OswaldFont}" 
                        FontSize="28"
                        Foreground="#7C3AED" 
                        HorizontalAlignment="Center"/>
@@ -65,6 +65,5 @@
 
             </StackPanel>
         </Border>
-
     </Grid>
 </Page>

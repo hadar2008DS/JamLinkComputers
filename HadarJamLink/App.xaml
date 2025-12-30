@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:HadarJamLink"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="OswaldFont">pack://application:,,,/Assets/Fonts/Oswald[wght].ttf#Oswald</FontFamily>
     </Application.Resources>
 </Application>
