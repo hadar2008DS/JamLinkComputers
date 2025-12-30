@@ -10,6 +10,8 @@
 
     <Grid Background="#F1F5F9">
         <TextBlock Text="Welcome!"
+                   FontFamily="{StaticResource OswaldFont}"
+                   FontWeight="Medium"
                    FontSize="28"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>

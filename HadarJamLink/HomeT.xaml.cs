@@ -108,7 +108,7 @@ namespace HadarJamLink
             try
             {
                 // 2️⃣ קריאה ל-API דרך ApiService
-                PersonList pList = await apiService.GetPerson();
+                PersonList pList = await apiService.GetPeople();
 
                 if (pList == null || pList.Count == 0)
                 {
