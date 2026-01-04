@@ -5,5 +5,10 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <FontFamily x:Key="OswaldFont">pack://application:,,,/Assets/Fonts/Oswald[wght].ttf#Oswald</FontFamily>
+
+        <!-- ImageBrush moved to application resources for reuse -->
+        <ImageBrush x:Key="JamLinkBackgroundBrush"
+                    ImageSource="pack://application:,,,/Assets/Images/JamLinkLogInUp.png"
+                    Stretch="UniformToFill" />
     </Application.Resources>
 </Application>

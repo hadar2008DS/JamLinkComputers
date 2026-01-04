@@ -9,12 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\JamLinkLogInUp.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="ClientSide">
       <HintPath>..\..\JamLink\ClientSide\bin\Debug\net8.0\ClientSide.dll</HintPath>
     </Reference>
     <Reference Include="Model">
       <HintPath>..\..\JamLink\Model\bin\Debug\net8.0\Model.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\JamLinkLogInUp.png" />
   </ItemGroup>
 
 </Project>

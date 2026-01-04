@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace JamLinkComputers
 {
     /// <summary>
-    /// Interaction logic for UserHome.xaml
+    /// Interaction logic for UserHomePage.xaml
     /// </summary>
-    public partial class UserHome : Page
+    public partial class UserHomePage : Page
     {
-        public UserHome()
+        public UserHomePage()
         {
             InitializeComponent();
+
         }
     }
 }

@@ -7,63 +7,54 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HomeT">
-
-    <Grid Background="#F8FAFC">
-
-        <Border Width="340"
-            Padding="36"
-            Background="White"
-            CornerRadius="24"
-            BorderBrush="#7C3AED"
-            BorderThickness="2"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center">
-
-            <StackPanel>
-
-                <TextBlock Text="JamLink"
-                       FontFamily="{StaticResource OswaldFont}" 
-                       FontSize="28"
-                       Foreground="#7C3AED" 
-                       HorizontalAlignment="Center"/>
-
-                <TextBox x:Name="usernameBox"
-                     Height="40"
-                     BorderBrush="#E5E7EB"
-                     ToolTip="Username"/>
-
-                <TextBlock x:Name="usernameError" Foreground="Red" FontSize="12" />
-
-                <!-- Simple password with show/hide controlled by a CheckBox -->
-                <PasswordBox x:Name="passwordBox"
+    <!-- Use the brush from Application.Resources -->
+    <Grid Background="{StaticResource JamLinkBackgroundBrush}" >
+        <!-- make the inner overlay transparent so the background image is visible -->
+        <Grid Background="Transparent">
+            <Border Width="340"
+                Padding="36"
+                Background="White"
+                CornerRadius="24"
+                BorderBrush="#7C3AED"
+                BorderThickness="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="JamLink"
+                           FontFamily="{StaticResource OswaldFont}" 
+                           FontSize="28"
+                           Foreground="#7C3AED" 
+                           HorizontalAlignment="Center"/>
+                    <TextBox x:Name="usernameBox"
                          Height="40"
-                         PasswordChanged="PasswordBox_PasswordChanged" />
-
-                <TextBox x:Name="passwordTextBox"
-                     Height="40"
-                     Visibility="Collapsed"
-                     TextChanged="PasswordTextBox_TextChanged" />
-
-                <CheckBox x:Name="showPasswordCheck"
-                      Content="Show password"
-                      Checked="ShowPasswordCheck_Checked"
-                      Unchecked="ShowPasswordCheck_Unchecked" />
-
-                <TextBlock x:Name="passwordError" Foreground="Red" FontSize="12" />
-
-                <Button x:Name="loginButton"
-                    Content="Login"
-                    Height="42"
-                    Background="#7C3AED"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Click="LoginButton_Click"/>
-
-                <TextBlock Text="Create a new account"
-                       Foreground="#06B6D4"
-                       HorizontalAlignment="Center"/>
-
-            </StackPanel>
-        </Border>
+                         BorderBrush="#E5E7EB"
+                         ToolTip="Username"/>
+                    <TextBlock x:Name="usernameError" Foreground="Red" FontSize="12" />
+                    <!-- Simple password with show/hide controlled by a CheckBox -->
+                    <PasswordBox x:Name="passwordBox"
+                             Height="40"
+                             PasswordChanged="PasswordBox_PasswordChanged" />
+                    <TextBox x:Name="passwordTextBox"
+                         Height="40"
+                         Visibility="Collapsed"
+                         TextChanged="PasswordTextBox_TextChanged" />
+                    <CheckBox x:Name="showPasswordCheck"
+                          Content="Show password"
+                          Checked="ShowPasswordCheck_Checked"
+                          Unchecked="ShowPasswordCheck_Unchecked" />
+                    <TextBlock x:Name="passwordError" Foreground="Red" FontSize="12" />
+                    <Button x:Name="loginButton"
+                        Content="Login"
+                        Height="42"
+                        Background="#7C3AED"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="LoginButton_Click"/>
+                    <TextBlock Text="Create a new account"
+                           Foreground="#06B6D4"
+                           HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Page>
