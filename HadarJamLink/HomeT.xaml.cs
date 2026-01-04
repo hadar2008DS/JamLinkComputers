@@ -101,13 +101,13 @@ namespace HadarJamLink
             //MessageBox.Show("6. Login successful");
 
             //NavigationService?.Navigate(new UserHome());
-            // 1️⃣ בדיקת קלטים
+            // 1 בדיקת קלטים
             if (!ValidateLoginInputs(out string username, out string password))
                 return;
 
             try
             {
-                // 2️⃣ קריאה ל-API דרך ApiService
+                // 2 קריאה ל-API דרך ApiService
                 PersonList pList = await apiService.GetPeople();
 
                 if (pList == null || pList.Count == 0)
@@ -116,7 +116,7 @@ namespace HadarJamLink
                     return;
                 }
 
-                // 3️⃣ בדיקה אם המשתמש קיים (ללא Trim)
+                // 3 בדיקה אם המשתמש קיים (ללא Trim)
                 Person p = pList.Find(u =>
                     u.Username == username &&
                     u.PassW == password
@@ -128,12 +128,12 @@ namespace HadarJamLink
                     return;
                 }
 
-                // 4️⃣ כניסה הצליחה
+                // 4 כניסה הצליחה
                 passwordError.Text = "";
                 usernameError.Text = "";
                 MessageBox.Show("Login successful!");
 
-                // 5️⃣ מעבר לעמוד הבית
+                // 5 מעבר לעמוד הבית
                 if (NavigationService != null)
                 {
                     NavigationService.Navigate(new UserHome());
