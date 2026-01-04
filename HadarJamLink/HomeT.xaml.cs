@@ -31,76 +31,7 @@ namespace HadarJamLink
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            //// 1. validate inputs
-            //if (!ValidateLoginInputs(out string username, out string password))
-            //    return;
-
-            //// 2. check against server / DB
-            //PersonList pList = await apiService.GetPerson();
-
-            //Person p = pList.Find(p =>
-            //    p.Username == username &&
-            //    p.PassW == password
-            //);
-
-            //if (p == null)
-            //{
-            //    passwordError.Text = "Invalid username or password.";
-            //    return;
-            //}
-
-            //// 3. login success
-            //MessageBox.Show("Login successful!", "Success");
-
-            //// 4. navigate to user home page
-            //if (NavigationService != null)
-            //{
-            //    NavigationService.Navigate(new UserHome());
-            //}
-            //else
-            //{
-            //    MessageBox.Show("NavigationService is null");
-            //}
-            //MessageBox.Show("1. Click entered");
-
-            //if (!ValidateLoginInputs(out string username, out string password))
-            //{
-            //    MessageBox.Show("2. Validation failed");
-            //    return;
-            //}
-
-            //MessageBox.Show("3. Validation OK");
-
-            ////PersonList pList = await apiService.GetPerson();
-            //PersonList pList = null;
-
-            //try
-            //{
-            //    pList = await apiService.GetPerson();
-            //    MessageBox.Show("4. Got users: " + (pList?.Count ?? 0));
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Error in GetPerson(): " + ex.Message);
-            //}
-
-
-            //MessageBox.Show("4. Got users from API");
-
-            //Person p = pList.Find(p =>
-            //    p.Username == username &&
-            //    p.PassW == password
-            //);
-
-            //if (p == null)
-            //{
-            //    MessageBox.Show("5. User not found");
-            //    return;
-            //}
-
-            //MessageBox.Show("6. Login successful");
-
-            //NavigationService?.Navigate(new UserHome());
+            
             // 1 בדיקת קלטים
             if (!ValidateLoginInputs(out string username, out string password))
                 return;
