@@ -25,12 +25,18 @@
                            FontSize="28"
                            Foreground="#7C3AED" 
                            HorizontalAlignment="Center"/>
+                    <TextBlock Text="Username"
+                        FontWeight="SemiBold"
+                        FontFamily="{StaticResource OswaldFont}"/>
                     <TextBox x:Name="usernameBox"
                          Height="40"
                          BorderBrush="#E5E7EB"
                          ToolTip="Username"/>
                     <TextBlock x:Name="usernameError" Foreground="Red" FontSize="12" />
                     <!-- Simple password with show/hide controlled by a CheckBox -->
+                    <TextBlock Text="Password"
+                        FontWeight="SemiBold"
+                        FontFamily="{StaticResource OswaldFont}"/>
                     <PasswordBox x:Name="passwordBox"
                              Height="40"
                              PasswordChanged="PasswordBox_PasswordChanged" />
@@ -50,9 +56,16 @@
                         Foreground="White"
                         BorderThickness="0"
                         Click="LoginButton_Click"/>
-                    <TextBlock Text="Create a new account"
-                           Foreground="#06B6D4"
-                           HorizontalAlignment="Center"/>
+                    <!-- Replaced TextBlock with a Button that navigates to RegisterPage -->
+                    <Button x:Name="registerButton"
+                            Content="Create a new account"
+                            Foreground="#06B6D4"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            HorizontalAlignment="Center"
+                            Padding="0"
+                            Cursor="Hand"
+                            Click="RegisterButton_Click"/>
                 </StackPanel>
             </Border>
         </Grid>

@@ -28,15 +28,25 @@
                                HorizontalAlignment="Center"/>
 
                     <!-- Username -->
+                    <TextBlock Text="Username"
+                               FontWeight="SemiBold"
+                        FontFamily="{StaticResource OswaldFont}"/>
                     <TextBox x:Name="usernameBox"
                              Height="40"
-                             BorderBrush="#E5E7EB"
+                             FontFamily="{StaticResource OswaldFont}"
+                             BorderBrush="#7C3AED"
                              ToolTip="Username"/>
                     <TextBlock x:Name="usernameError" Foreground="Red" FontSize="12" />
 
                     <!-- Password -->
+                    <TextBlock Text="Password"
+                               FontWeight="SemiBold"
+                               FontFamily="{StaticResource OswaldFont}"
+                                />
                     <PasswordBox x:Name="passwordBox"
                                  Height="40"
+                                 FontFamily="{StaticResource OswaldFont}"
+                                 BorderBrush="#7C3AED"
                                  PasswordChanged="PasswordBox_PasswordChanged"/>
                     <TextBox x:Name="passwordTextBox"
                              Height="40"
@@ -49,7 +59,7 @@
                     <TextBlock x:Name="passwordError" Foreground="Red" FontSize="12" />
 
                     <!-- User Type -->
-                    <ComboBox x:Name="userTypeCombo" Height="40" Margin="0,10,0,0">
+                    <ComboBox x:Name="userTypeCombo" Height="40">
                         <ComboBoxItem Content="Musician" IsSelected="True"/>
                         <ComboBoxItem Content="Producer"/>
                     </ComboBox>

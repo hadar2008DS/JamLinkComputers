@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace JamLinkComputers
 {
@@ -20,6 +12,8 @@ namespace JamLinkComputers
     /// </summary>
     public partial class UserHome : Page
     {
+        private CancellationTokenSource? _cts;
+
         public UserHome()
         {
             InitializeComponent();
@@ -28,7 +22,7 @@ namespace JamLinkComputers
         private async void LoadingScreen_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             // זמן טעינה
-            await Task.Delay(2500);
+            await Task.Delay(3500);
 
             // ניווט למסך הבית
             NavigationService?.Navigate(new UserHomePage());

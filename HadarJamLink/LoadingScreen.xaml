@@ -13,7 +13,7 @@
     <Grid Background="{StaticResource JamLinkBackgroundBrush}">
 
         <!-- Main content -->
-        <TextBlock Text="Welcome!"
+        <TextBlock 
                FontSize="28"
                FontWeight="Medium"
                HorizontalAlignment="Center"

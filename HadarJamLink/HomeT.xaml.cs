@@ -47,7 +47,7 @@ namespace HadarJamLink
                     return;
                 }
 
-                // 3 בדיקה אם המשתמש קיים (ללא Trim)
+                // 3 בדיקה אם המשתמש קיים  
                 Person p = pList.Find(u =>
                     u.Username == username &&
                     u.PassW == password
@@ -184,5 +184,37 @@ namespace HadarJamLink
             return true;
         }
 
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Clear previous errors
+            usernameError.Text = string.Empty;
+            passwordError.Text = string.Empty;
+
+            try
+            {
+                var registerPage = new RegisterPage();
+
+                // Try to get a NavigationService (prefer this.NavigationService)
+                var nav = NavigationService ?? System.Windows.Navigation.NavigationService.GetNavigationService(this);
+
+                if (nav != null)
+                {
+                    nav.Navigate(registerPage);
+                    return;
+                }
+
+                // Helpful message if navigation isn't available
+                MessageBox.Show(
+                    "Unable to navigate to RegisterPage. Ensure this page is hosted inside a Frame or NavigationWindow.",
+                    "Navigation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open Register page: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
