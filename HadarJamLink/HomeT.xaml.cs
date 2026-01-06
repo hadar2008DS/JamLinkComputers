@@ -31,14 +31,14 @@ namespace HadarJamLink
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            // 1 בדיקת קלטים
+
+            // 1 Check inputs
             if (!ValidateLoginInputs(out string username, out string password))
                 return;
 
             try
             {
-                // 2 קריאה ל-API דרך ApiService
+                // 2 call API to get all users
                 PersonList pList = await apiService.GetPeople();
 
                 if (pList == null || pList.Count == 0)
@@ -47,7 +47,7 @@ namespace HadarJamLink
                     return;
                 }
 
-                // 3 בדיקה אם המשתמש קיים  
+                // 3  If user exists with matching username and password  
                 Person p = pList.Find(u =>
                     u.Username == username &&
                     u.PassW == password
@@ -59,12 +59,12 @@ namespace HadarJamLink
                     return;
                 }
 
-                // 4 כניסה הצליחה
+                // 4 Login successful
                 passwordError.Text = "";
                 usernameError.Text = "";
                 MessageBox.Show("Login successful!");
 
-                // 5 מעבר לעמוד הבית
+                // 5 Navigate to UserHome page
                 if (NavigationService != null)
                 {
                     NavigationService.Navigate(new UserHome());
@@ -76,7 +76,7 @@ namespace HadarJamLink
             }
             catch (Exception ex)
             {
-                // טיפול בשגיאות חיבור / JSON ריק
+                // Hendle Connection error ( JSON null/not valid )
                 passwordError.Text = "Error connecting to server: " + ex.Message;
             }
         }
@@ -194,22 +194,15 @@ namespace HadarJamLink
             {
                 var registerPage = new RegisterPage();
 
-                // Try to get a NavigationService (prefer this.NavigationService)
-                var nav = NavigationService ?? System.Windows.Navigation.NavigationService.GetNavigationService(this);
+                var nav = NavigationService;
 
-                if (nav != null)
+                if (nav == null)
                 {
-                    nav.Navigate(registerPage);
+                    MessageBox.Show("Navigation failed.");
                     return;
                 }
 
-                // Helpful message if navigation isn't available
-                MessageBox.Show(
-                    "Unable to navigate to RegisterPage. Ensure this page is hosted inside a Frame or NavigationWindow.",
-                    "Navigation Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
+                nav.Navigate(registerPage);
             }
             catch (Exception ex)
             {

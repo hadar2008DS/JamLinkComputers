@@ -25,7 +25,14 @@ namespace JamLinkComputers
             if (!ValidateInputs(out string username, out string password))
                 return;
 
-            string userType = ((ComboBoxItem)userTypeCombo.SelectedItem).Content.ToString();
+            string userType = "";
+
+            if (userTypeCombo.SelectedItem != null)
+            {
+                ComboBoxItem item = (ComboBoxItem)userTypeCombo.SelectedItem;
+                userType = item.Content.ToString();
+            }
+
 
             try
             {
@@ -36,19 +43,58 @@ namespace JamLinkComputers
                     PassW = password
                 };
 
-                // 3. Send to API
+                // 3. Send to API - insert base person record
                 await apiService.InsertPerson(newUser);
+
+                // Also insert into specific role table if applicable
+                // If ApiService exposes InsertMusician/InsertProducer that accept Person (or similar),
+                // these calls will attach role-specific records. If it differ adjust accordingly.
+                try
+                {
+                    // compare the userType. I used Var to simplify the code.
+                    string utype = "";
+
+                    if (userType != null)
+                    {
+                        utype = userType.Trim().ToLower();
+                    }
+
+
+                    if (utype == "musician")
+                    {
+                        // Create a Musician object from Person
+                        Musician newMusician = new Musician
+                        {
+                            Username = newUser.Username,
+                            PassW = newUser.PassW,
+                            IsActive = true // set as needed
+                            // Add other Musician-specific properties if required
+                        };
+                        await apiService.InsertMusician(newMusician);
+                    }
+                    else if (utype == "producer")
+                    {
+                        // Create a Producer object from Person
+                        Producer newProducer = new Producer
+                        {
+                            Username = newUser.Username,
+                            PassW = newUser.PassW,
+                            IsActive = true // set as needed
+                            // Add other Producer-specific properties if required
+                        };
+                        await apiService.InsertProducer(newProducer);
+                    }
+                }
+                catch (Exception roleEx)
+                {
+                    // Role-specific insert failed - notify but allow registration to proceed for base Person.
+                    MessageBox.Show("Registered user, but role registration failed: " + roleEx.Message);
+                }
 
                 MessageBox.Show("Registration successful!");
 
                 // 4. Navigate to UserHomePage
                 NavigationService?.Navigate(new UserHomePage());
-
-                //// 4. Navigate to the appropriate home page
-                //if (userType == "Musician")
-                //    NavigationService?.Navigate(new MusicianHomePage(newUser, userType));
-                //else
-                //    NavigationService?.Navigate(new ProducerHomePage(newUser, userType));
             }
             catch (Exception ex)
             {
@@ -66,29 +112,35 @@ namespace JamLinkComputers
 
             if (string.IsNullOrWhiteSpace(username))
             {
-                usernameError.Text = "נדרש שם משתמש.";
+                usernameError.Text = "Username is required.";
                 usernameBox.Focus();
                 return false;
             }
 
             if (username.Length > 20 || !Regex.IsMatch(username, @"^[A-Za-z0-9]+$"))
             {
-                usernameError.Text = "שם המשתמש חייב להיות עד 20 תווים (אותיות/מספרים).";
+                usernameError.Text = "Username must be at most 20 characters and contain only letters and digits.";
                 usernameBox.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                passwordError.Text = "נדרש סיסמה.";
-                passwordBox.Focus();
+                passwordError.Text = "Password is required.";
+                if (passwordBox.Visibility == Visibility.Visible)
+                    passwordBox.Focus();
+                else
+                    passwordTextBox.Focus();
                 return false;
             }
 
             if (password.Length > 20 || !Regex.IsMatch(password, @"^[A-Za-z0-9]+$"))
             {
-                passwordError.Text = "הסיסמה חייבת להיות עד 20 תווים (אותיות/מספרים).";
-                passwordBox.Focus();
+                passwordError.Text = "Password must be at most 20 characters and contain only letters and digits.";
+                if (passwordBox.Visibility == Visibility.Visible)
+                    passwordBox.Focus();
+                else
+                    passwordTextBox.Focus();
                 return false;
             }
 
