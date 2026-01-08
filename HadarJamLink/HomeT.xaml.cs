@@ -64,10 +64,10 @@ namespace HadarJamLink
                 usernameError.Text = "";
                 MessageBox.Show("Login successful!");
 
-                // 5 Navigate to UserHome page
+                // 5 Navigate to Loading (pass username so Loading can forward to UserHomePage)
                 if (NavigationService != null)
                 {
-                    NavigationService.Navigate(new UserHome());
+                    NavigationService.Navigate(new UserHome(p.Id));
                 }
                 else
                 {

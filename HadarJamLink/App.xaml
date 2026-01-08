@@ -10,5 +10,13 @@
         <ImageBrush x:Key="JamLinkBackgroundBrush"
                     ImageSource="pack://application:,,,/Assets/Images/JamLinkLogInUp.png"
                     Stretch="UniformToFill" />
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
     </Application.Resources>
 </Application>

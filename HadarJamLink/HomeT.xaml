@@ -63,7 +63,6 @@
                             Background="Transparent"
                             BorderThickness="0"
                             HorizontalAlignment="Center"
-                            Padding="0"
                             Cursor="Hand"
                             Click="RegisterButton_Click"/>
                 </StackPanel>

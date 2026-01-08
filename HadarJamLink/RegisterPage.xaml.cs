@@ -56,7 +56,7 @@ namespace JamLinkComputers
 
                     if (userType != null)
                     {
-                        utype = userType.Trim().ToLower();
+                        utype = userType.ToLower();// used ToLower() to avoid case sensitivity issues
                     }
 
 
@@ -67,8 +67,8 @@ namespace JamLinkComputers
                         {
                             Username = newUser.Username,
                             PassW = newUser.PassW,
-                            IsActive = true // set as needed
-                            // Add other Musician-specific properties if required
+                            IsActive = true // set as needed, can be modified later
+                            // Add other Musician specific properties if required
                         };
                         await apiService.InsertMusician(newMusician);
                     }
@@ -79,7 +79,7 @@ namespace JamLinkComputers
                         {
                             Username = newUser.Username,
                             PassW = newUser.PassW,
-                            IsActive = true // set as needed
+                            IsActive = true // set as needed, can be modified later
                             // Add other Producer-specific properties if required
                         };
                         await apiService.InsertProducer(newProducer);
@@ -87,14 +87,14 @@ namespace JamLinkComputers
                 }
                 catch (Exception roleEx)
                 {
-                    // Role-specific insert failed - notify but allow registration to proceed for base Person.
+                    // Role specific insert failed then notify but allow registration to proceed for base Person.
                     MessageBox.Show("Registered user, but role registration failed: " + roleEx.Message);
                 }
 
                 MessageBox.Show("Registration successful!");
 
-                // 4. Navigate to UserHomePage
-                NavigationService?.Navigate(new UserHomePage());
+                // 4. Navigate to Loading screen (shows overlay then navigates to UserHomePage)
+                NavigationService?.Navigate(new UserHome(newUser.Id));
             }
             catch (Exception ex)
             {
@@ -108,7 +108,16 @@ namespace JamLinkComputers
             passwordError.Text = "";
 
             username = usernameBox.Text ?? string.Empty;
-            password = passwordBox.Visibility == Visibility.Visible ? passwordBox.Password : passwordTextBox.Text;
+            
+
+            if (passwordBox.Visibility == Visibility.Visible)
+            {
+                password = passwordBox.Password;
+            }
+            else
+            {
+                password = passwordTextBox.Text;
+            }
 
             if (string.IsNullOrWhiteSpace(username))
             {

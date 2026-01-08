@@ -8,7 +8,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserHome">
     <!--inspo from :-->
-    <!--https://learn.microsoft.com/en-us/answers/questions/1062347/how-to-show-a-loading-to-the-user-during-a-heavy-o-->
+    <!--https://www.youtube.com/watch?v=c7GRu6X1zWg&t=40s-->
+    
 
     <Grid Background="{StaticResource JamLinkBackgroundBrush}">
 
