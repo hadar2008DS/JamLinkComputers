@@ -19,18 +19,19 @@ using System.Windows.Shapes;
 namespace HadarJamLink
 {
     /// <summary>
-    /// Interaction logic for HomeT.xaml
+    /// Interaction logic for LogInPage.xaml
     /// </summary>
-    public partial class HomeT : Page
+    public partial class LogInPage : Page
     {
         ApiService apiService = new ApiService();
-        public HomeT()
+        public LogInPage()
         {
             InitializeComponent();
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            loginButton.IsEnabled = false; // prevent multiple clicks
 
             // 1 Check inputs
             if (!ValidateLoginInputs(out string username, out string password))
@@ -67,17 +68,21 @@ namespace HadarJamLink
                 // 5 Navigate to Loading (pass username so Loading can forward to UserHomePage)
                 if (NavigationService != null)
                 {
-                    NavigationService.Navigate(new UserHome(p.Id));
+                    NavigationService.Navigate(new UserHome(p));
                 }
                 else
                 {
-                    MessageBox.Show("NavigationService is null. Make sure HomeT is inside a Frame!");
+                    MessageBox.Show("NavigationService is null. Make sure LogInPage is inside a Frame!");
                 }
             }
             catch (Exception ex)
             {
                 // Hendle Connection error ( JSON null/not valid )
                 passwordError.Text = "Error connecting to server: " + ex.Message;
+            }
+            finally
+            {
+                loginButton.IsEnabled = true; // re-enable button
             }
         }
 

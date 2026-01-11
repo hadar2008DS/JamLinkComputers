@@ -94,7 +94,7 @@ namespace JamLinkComputers
                 MessageBox.Show("Registration successful!");
 
                 // 4. Navigate to Loading screen (shows overlay then navigates to UserHomePage)
-                NavigationService?.Navigate(new UserHome(newUser.Id));
+                NavigationService?.Navigate(new UserHome(newUser));
             }
             catch (Exception ex)
             {
