@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JamLinkComputers.UserControls
+namespace JamLinkComputers.UControl
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for HomeV.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class HomeV : UserControl
     {
-        public HomeView()
+        public HomeV()
         {
             InitializeComponent();
         }

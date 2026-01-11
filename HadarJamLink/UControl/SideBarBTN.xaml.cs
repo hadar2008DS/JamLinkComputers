@@ -13,33 +13,32 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JamLinkComputers.UserControls
+namespace JamLinkComputers.UControl
 {
+  
     /// <summary>
-    /// Interaction logic for SideBarButton.xaml
+    /// Interaction logic for SideBarBTN.xaml
     /// </summary>
-    public partial class SideBarButton : System.Windows.Controls.UserControl
+    public partial class SideBarBTN : UserControl
     {
         public event Action<string> MenuClicked;
-
-        public SideBarButton()
+        public SideBarBTN()
         {
             InitializeComponent();
         }
-
         private void Home_Click(object sender, RoutedEventArgs e)
-        => MenuClicked?.Invoke("Home");
+       => MenuClicked.Invoke("Home");
 
         private void Profile_Click(object sender, RoutedEventArgs e)
-            => MenuClicked?.Invoke("Profile");
+            => MenuClicked.Invoke("Profile");
 
         private void Groups_Click(object sender, RoutedEventArgs e)
-            => MenuClicked?.Invoke("Groups");
+            => MenuClicked.Invoke("Groups");
 
         private void MusicianBtn_Click(object sender, RoutedEventArgs e)
-            => MenuClicked?.Invoke("Musician");
+            => MenuClicked.Invoke("Musician");
 
         private void ProducerBtn_Click(object sender, RoutedEventArgs e)
-            => MenuClicked?.Invoke("Producer");
+            => MenuClicked.Invoke("Producer");
     }
 }
