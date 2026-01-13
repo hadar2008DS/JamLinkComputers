@@ -18,7 +18,6 @@
                 <TextBlock Text="Quick actions and updates will appear here."
                        Foreground="#666"/>
             </StackPanel>
-
         </Border>
     </Grid>
 </UserControl>

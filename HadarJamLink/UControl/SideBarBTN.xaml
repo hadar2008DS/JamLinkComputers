@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="JamLinkComputers.UControl.SideBarBTN"
+             xmlns:uc="clr-namespace:JamLinkComputers"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,31 +9,52 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Border x:Name="SideBar"
-        Width="85"
-        Background="#F4F5F9"
-        Padding="8"
-        >
+            Width="85"
+            Background="#F4F5F9"
+            Padding="8"
+            MouseEnter="SideBar_MouseEnter"
+            MouseLeave="SideBar_MouseLeave">
 
             <StackPanel>
 
-                <TextBlock x:Name="WelcomeText"
-                   Text="Welcome"
-                   FontSize="16"
-                   FontWeight="SemiBold"/>
+                <TextBlock Text="Welcome"
+                       FontSize="16"
+                           FontFamily="{StaticResource OswaldFont}"
+                       FontWeight="SemiBold"/>
 
-                <!--<Button Content="Home" Click="Home_Click"/>
-            <Button Content="Profile" Click="Profile_Click"/>
-            <Button Content="Groups" Click="Groups_Click"/>-->
+                <Button Content="Home"
+                        FontFamily="{StaticResource OswaldFont}"
+                        Background="#F4F5F9"
+                        BorderBrush="#7C3AED"
+                    Click="Home_Click"/>
+
+                <Button Content="Profile"
+                        FontFamily="{StaticResource OswaldFont}"
+                        Background="#F4F5F9"
+                        BorderBrush="#7C3AED"
+                    Click="Profile_Click"/>
+
+                <Button Content="Groups"
+                        FontFamily="{StaticResource OswaldFont}"
+                        Background="#F4F5F9"
+                        BorderBrush="#7C3AED"
+                    Click="Groups_Click"/>
 
                 <Button x:Name="MusicianButton"
-                Content="Upload Segment"
-                Visibility="Collapsed"
-                Click="MusicianBtn_Click"/>
+                        FontFamily="{StaticResource OswaldFont}"
+                        Background="#F4F5F9"
+                        BorderBrush="#7C3AED"
+                    Content="Upload Segment"
+                    Visibility="Collapsed"
+                    Click="Musician_Click"/>
 
                 <Button x:Name="ProducerButton"
-                Content="Create Project"
-                Visibility="Collapsed"
-                Click="ProducerBtn_Click"/>
+                        FontFamily="{StaticResource OswaldFont}"
+                        Background="#F4F5F9"
+                        BorderBrush="#7C3AED"
+                    Content="Create Project"
+                    Visibility="Collapsed"
+                    Click="Producer_Click"/>
 
             </StackPanel>
         </Border>
