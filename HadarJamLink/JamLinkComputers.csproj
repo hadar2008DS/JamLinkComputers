@@ -17,7 +17,7 @@
       <HintPath>..\..\JamLink\ClientSide\bin\Debug\net8.0\ClientSide.dll</HintPath>
     </Reference>
     <Reference Include="Model">
-      <HintPath>..\..\JamLink\Model\bin\Debug\net8.0\Model.dll</HintPath>
+      <HintPath>..\..\JamLink\ClientSide\bin\Debug\net8.0\Model.dll</HintPath>
     </Reference>
   </ItemGroup>
 
