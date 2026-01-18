@@ -27,9 +27,11 @@ namespace JamLinkComputers.UControl
     {
         ApiService ApiService = new ApiService();
         List<Model.Group> allGroups = new List<Model.Group>();
-        public GroupsV()
+        private Person currentUser;
+        public GroupsV(Person loggedInUser)
         {
             InitializeComponent();
+            this.currentUser = loggedInUser;
             LoadData();
         }
 
@@ -37,20 +39,37 @@ namespace JamLinkComputers.UControl
         {
             try
             {
-                // 1. משיכת הנתונים המעודכנים ביותר מהשרת
-                var gList = await ApiService.GetGroups();
-                allGroups = gList.ToList();
+                // 1. Fetch all groups and all membership records
+                var allGroups = await ApiService.GetGroups();
+                var allMemberships = await ApiService.GetGroupMembers();
 
-                // 2. ניתוק וחיבור מחדש של המקור (חשוב לרענון ויזואלי)
+                if (allGroups == null || allMemberships == null)
+                {
+                    MessageBox.Show("Could not retrieve data from server.");
+                    return;
+                }
+
+                // 2. Find the IDs of the groups where the current user is a member
+                // We look for rows in GroupMembers where PersonId matches our user
+                var myGroupIds = allMemberships
+                    .Where(m => m.Id == currentUser.Id) // 'Id' here represents the PersonId
+                    .Select(m => m.Group.Id)            // Get the ID from the nested Group object
+                    .ToList();
+
+                // 3. Split into two lists
+                var myGroups = allGroups.Where(g => myGroupIds.Contains(g.Id)).ToList();
+                var otherGroups = allGroups.Where(g => !myGroupIds.Contains(g.Id)).ToList();
+
+                // 4. Bind to the UI
                 MyGroupsListBox.ItemsSource = null;
-                MyGroupsListBox.ItemsSource = allGroups.Where(g => g.IsActive).ToList();
+                MyGroupsListBox.ItemsSource = myGroups;
 
                 AllGroupsListBox.ItemsSource = null;
-                AllGroupsListBox.ItemsSource = allGroups.Where(g => !g.IsActive).ToList();
+                AllGroupsListBox.ItemsSource = otherGroups;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("שגיאה בטעינת נתונים: " + ex.Message);
+                MessageBox.Show($"Error loading data: {ex.Message}");
             }
         }
 
@@ -187,6 +206,9 @@ namespace JamLinkComputers.UControl
 
             try
             {
+                // 3. בניית אובייקט הקבוצה
+                var newGroup = new Model.Group
+                {
                     GroupName = groupName,
                     CreationDate = DateTime.Now,
                     IsActive = true
@@ -217,7 +239,6 @@ namespace JamLinkComputers.UControl
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
-
 
         }
 
