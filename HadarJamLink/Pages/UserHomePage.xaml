@@ -17,17 +17,17 @@
                 Background="#F4F5F9"
                 Padding="8">
             <StackPanel>
-                <uc:SideBarBTN x:Name="SideBarBTN" />
+                <uc:SideBarBTN x:Name="SideBarBTN" Loaded="SideBarBTN_Loaded" />
                 <Button x:Name="MusicianButton"
                         Content="Upload Segment"
                         Height="36"
                         Visibility="Collapsed"
-                        Click="MusicianBtn_Click"/>
+                        />
                 <Button x:Name="ProducerButton"
                         Content="Create Project"
                         Height="36"
                         Visibility="Collapsed"
-                        Click="ProducerBtn_Click"/>
+                        />
             </StackPanel>
         </Border>
 

@@ -268,13 +268,17 @@ namespace JamLinkComputers
         {
             MainContent.Content = view;
         }
-
         private void ProducerBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void MusicianBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SideBarBTN_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

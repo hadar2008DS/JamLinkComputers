@@ -17,6 +17,11 @@
                        FontWeight="SemiBold"/>
                 <TextBlock Text="Quick actions and updates will appear here."
                        Foreground="#666"/>
+                <ScrollViewer >
+                    <WrapPanel Orientation="Horizontal" x:Name="CardsContainer">
+                        
+                    </WrapPanel>
+                </ScrollViewer>
             </StackPanel>
         </Border>
     </Grid>
