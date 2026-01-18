@@ -187,9 +187,6 @@ namespace JamLinkComputers.UControl
 
             try
             {
-                // 3. בניית אובייקט הקבוצה
-                var newGroup = new Model.Group
-                {
                     GroupName = groupName,
                     CreationDate = DateTime.Now,
                     IsActive = true
