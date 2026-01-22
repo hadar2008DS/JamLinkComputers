@@ -250,11 +250,11 @@ namespace JamLinkComputers
                     break;
 
                 case "Groups":
-                    LoadView(new GroupsV());
+                    LoadView(new GroupsV(currentUser));
                     break;
 
                 case "Musician":
-                    LoadView(new MusicianV());
+                    LoadView(new MusicianV(currentUser));
                     break;
 
                 case "Producer":

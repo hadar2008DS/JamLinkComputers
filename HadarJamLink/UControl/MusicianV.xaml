@@ -8,14 +8,37 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
         <StackPanel>
+            <TextBlock Text="Musician Profile Area" FontSize="24" FontWeight="Bold" />
 
-            <TextBlock Text="Musician Area"
-                   FontSize="22"
-                   FontWeight="Bold"/>
+            <GroupBox Header="My Instruments">
+                <ListBox x:Name="InstrumentsListBox" Height="100">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding InstrumentName}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
 
-            <!-- Upload button -->
-            <Button Content="Upload Audio Segment"
-                Click="Upload_Click"/>
+            <GroupBox Header="My Genres" Margin="0,10">
+                <ListBox x:Name="GenresListBox" Height="100">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding GenreName}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+
+            <GroupBox Header="Musical Segments" Margin="0,10">
+                <ListBox x:Name="SegmentsListBox" Height="100">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SegmentTitle}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
         </StackPanel>
     </Grid>
 </UserControl>
