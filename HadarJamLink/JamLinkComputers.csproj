@@ -13,6 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Melanchall.DryWetMidi" Version="8.0.3" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="ClientSide">
       <HintPath>..\..\JamLink\ClientSide\bin\Debug\net8.0\ClientSide.dll</HintPath>
     </Reference>

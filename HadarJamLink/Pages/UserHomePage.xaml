@@ -6,35 +6,83 @@
       av:DesignHeight="250" av:DesignWidth="490"
       >
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Tabs -->
+            <RowDefinition Height="*"/>
+            <!-- Content -->
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
+            <!-- Sidebar -->
             <ColumnDefinition Width="*"/>
+            <!-- Main -->
         </Grid.ColumnDefinitions>
 
+        <!-- ================= SIDEBAR ================= -->
         <Border x:Name="SideBar"
-                Grid.Column="0"
-                Width="120"
-                Background="#F4F5F9"
-                Padding="8">
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Width="120"
+            Background="#F4F5F9"
+            Padding="8">
+
             <StackPanel>
-                <uc:SideBarBTN x:Name="SideBarBTN" Loaded="SideBarBTN_Loaded" />
+                <uc:SideBarBTN x:Name="SideBarBTN"
+                           Loaded="SideBarBTN_Loaded"/>
+                <uc:TopToolsBar x:Name="TopToolsBar"
+                            Grid.Row="0" Grid.Column="1"/>
+
                 <Button x:Name="MusicianButton"
-                        Content="Upload Segment"
-                        Height="36"
-                        Visibility="Collapsed"
-                        />
+                    Content="Upload Segment"
+                    Height="36"
+                    Visibility="Collapsed"/>
+
                 <Button x:Name="ProducerButton"
-                        Content="Create Project"
-                        Height="36"
-                        Visibility="Collapsed"
-                        />
+                    Content="Create Project"
+                    Height="36"
+                    Visibility="Collapsed"/>
             </StackPanel>
         </Border>
 
-        <!-- Host area for dynamic UserControls -->
+        <!-- ================= TOP TABS ================= -->
+        <TabControl Grid.Row="0"
+                Grid.Column="1"
+                Height="50">
+
+            <TabItem Header=" Tools">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Tuner"
+                        
+                        Click="Tuner_Click"/>
+                    <Button Content="Scales"
+                        
+                        Click="Scales_Click"/>
+                    <Button Content="Chords"
+                        
+                        Click="Chords_Click"/>
+                    <Button Content="Metronome"
+                        
+                        Click="Metronome_Click"/>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Help">
+                <StackPanel Orientation="Horizontal" >
+                    <Button Content="Tips"
+                        
+                        Click="Tips_Click"/>
+                </StackPanel>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- ================= MAIN CONTENT ================= -->
         <ContentControl x:Name="MainContent"
-                        Grid.Column="1"
-                        Background="Transparent" />
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Background="Transparent"/>
     </Grid>
 </Page>
 

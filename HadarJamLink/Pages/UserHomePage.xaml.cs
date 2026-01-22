@@ -19,6 +19,7 @@ namespace JamLinkComputers
 
         private SideBarBTN SideBarBTNInstance;
         private Person currentUser;
+        private MetronomeControl metronomeInstance;
 
         public UserHomePage(Person user)
         {
@@ -281,6 +282,73 @@ namespace JamLinkComputers
         private void SideBarBTN_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private UIElement CreateTunerView()
+        {
+            return new TextBlock
+            {
+                Text = " Tuner (A = 440Hz)",
+                FontSize = 26,
+                Margin = new Thickness(20)
+            };
+        }
+
+        private UIElement CreateScalesView()
+        {
+            return new TextBlock
+            {
+                Text = " Scales Tool",
+                FontSize = 26,
+                Margin = new Thickness(20)
+            };
+        }
+
+        private UIElement CreateChordsView()
+        {
+            return new TextBlock
+            {
+                Text = " Chords Tool",
+                FontSize = 26,
+                Margin = new Thickness(20)
+            };
+        }
+
+        private UIElement CreateMetronomeView()
+        {
+            if (metronomeInstance == null)
+                metronomeInstance = new MetronomeControl();
+            
+            return metronomeInstance;
+        }
+        private void Tuner_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = CreateTunerView();
+        }
+
+        private void Scales_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = CreateScalesView();
+        }
+
+        private void Chords_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = CreateChordsView();
+        }
+
+        private void Metronome_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = CreateMetronomeView();
+        }
+
+        private void Tips_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new TextBlock
+            {
+                Text = "🎶 Helpful music tips",
+                FontSize = 24,
+                Margin = new Thickness(20)
+            };
         }
     }
 }

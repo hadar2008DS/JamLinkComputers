@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="JamLinkComputers.UControl.TopToolsBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JamLinkComputers.UControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+
+        <!-- Tool button style -->
+        <Style x:Key="ToolButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#EEF2FF"/>
+            <Setter Property="Foreground" Value="#3730A3"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14 6"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="14">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C7D2FE"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Shadow -->
+        <DropShadowEffect x:Key="SoftShadow"
+                          BlurRadius="10"
+                          ShadowDepth="1"
+                          Opacity="0.15"/>
+
+    </UserControl.Resources>
+
+    <!-- Container -->
+    <Border Background="White"
+            CornerRadius="0 0 18 18"
+            Padding="12"
+            Effect="{StaticResource SoftShadow}">
+
+        <DockPanel>
+
+            <!-- Title -->
+            <TextBlock Text="Tools"
+                       DockPanel.Dock="Left"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="8 0 20 0"/>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                <Button Content=" Tuner"
+                        Style="{StaticResource ToolButtonStyle}"
+                        Click="Tuner_Click"/>
+
+                <Button Content="🎼 Scales"
+                        Style="{StaticResource ToolButtonStyle}"
+                        Click="Scales_Click"/>
+
+                <Button Content="🎹 Chords"
+                        Style="{StaticResource ToolButtonStyle}"
+                        Click="Chords_Click"/>
+
+                <Button Content="⏱ Metronome"
+                        Style="{StaticResource ToolButtonStyle}"
+                        Click="Metronome_Click"/>
+
+            </StackPanel>
+
+        </DockPanel>
+    </Border>
+</UserControl>

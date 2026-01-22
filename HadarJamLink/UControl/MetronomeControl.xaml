@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="JamLinkComputers.UControl.MetronomeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JamLinkComputers.UControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border Background="#F4F5F9" CornerRadius="20" Padding="20" BorderBrush="#E0E0E0" BorderThickness="1">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+            <!-- כותרת -->
+            <TextBlock Text="Metronome" 
+                       FontSize="22" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       />
+
+            <!-- Ellipse ויזואלי -->
+            <Ellipse x:Name="BeatEllipse" Width="50" Height="50" Fill="#D1D5DB" Stroke="#9CA3AF" StrokeThickness="2" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+            <!-- BPM -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <TextBlock Text="BPM:" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <Slider x:Name="BpmSlider" Minimum="40" Maximum="200" Value="100" Width="120" 
+                        TickFrequency="5" IsSnapToTickEnabled="True"/>
+                <TextBlock x:Name="BpmLabel" Text="100" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Time Signature -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <TextBlock Text="Time:" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <ComboBox x:Name="TimeSignatureCombo" Width="80" SelectedIndex="0">
+                    <ComboBoxItem Content="4/4"/>
+                    <ComboBoxItem Content="3/4"/>
+                    <ComboBoxItem Content="6/8"/>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- כפתורים מעוגלים -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <Button x:Name="StartButton" Content="Start" Width="80" Height="35" 
+                        Background="#4F46E5" Foreground="White" FontWeight="SemiBold" BorderThickness="0" 
+                        Cursor="Hand"  >
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.3"/>
+                    </Button.Effect>
+                </Button>
+                <Button x:Name="StopButton" Content="Stop" Width="80" Height="35" 
+                        Background="#EF4444" Foreground="White" FontWeight="SemiBold" BorderThickness="0" 
+                        Cursor="Hand" >
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.3"/>
+                    </Button.Effect>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>
