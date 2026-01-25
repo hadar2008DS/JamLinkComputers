@@ -20,6 +20,7 @@ namespace JamLinkComputers
         private SideBarBTN SideBarBTNInstance;
         private Person currentUser;
         private MetronomeControl metronomeInstance;
+        private TunerControl TunerInstance;
 
         public UserHomePage(Person user)
         {
@@ -269,29 +270,18 @@ namespace JamLinkComputers
         {
             MainContent.Content = view;
         }
-        private void ProducerBtn_Click(object sender, RoutedEventArgs e)
-        {
+        private void ProducerBtn_Click(object sender, RoutedEventArgs e){}
 
-        }
+        private void MusicianBtn_Click(object sender, RoutedEventArgs e){}
 
-        private void MusicianBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SideBarBTN_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void SideBarBTN_Loaded(object sender, RoutedEventArgs e) {}
 
         private UIElement CreateTunerView()
         {
-            return new TextBlock
-            {
-                Text = " Tuner (A = 440Hz)",
-                FontSize = 26,
-                Margin = new Thickness(20)
-            };
+            if (TunerInstance == null)
+                TunerInstance = new TunerControl();
+
+            return TunerInstance;
         }
 
         private UIElement CreateScalesView()
