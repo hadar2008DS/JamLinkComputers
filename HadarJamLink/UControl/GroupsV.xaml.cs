@@ -39,37 +39,29 @@ namespace JamLinkComputers.UControl
         {
             try
             {
-                // 1. Fetch all groups and all membership records
-                var allGroups = await ApiService.GetGroups();
+                // טעינת הנתונים למשתנה של המחלקה (בלי var)
+                allGroups = await ApiService.GetGroups();
                 var allMemberships = await ApiService.GetGroupMembers();
 
-                if (allGroups == null || allMemberships == null)
-                {
-                    MessageBox.Show("Could not retrieve data from server.");
-                    return;
-                }
+                if (allGroups == null || allMemberships == null) return;
 
-                // 2. Find the IDs of the groups where the current user is a member
-                // We look for rows in GroupMembers where PersonId matches our user
+                // תיקון הסינון - מחפשים את ה-PersonId בתוך החברות
                 var myGroupIds = allMemberships
-                    .Where(m => m.Id == currentUser.Id) // 'Id' here represents the PersonId
-                    .Select(m => m.Group.Id)            // Get the ID from the nested Group object
-                    .ToList();
+                .Where(m => m.Group != null && m.Id == currentUser.Id)
+                .Select(m => m.Group.Id)
+                .ToList();
 
-                // 3. Split into two lists
                 var myGroups = allGroups.Where(g => myGroupIds.Contains(g.Id)).ToList();
                 var otherGroups = allGroups.Where(g => !myGroupIds.Contains(g.Id)).ToList();
 
-                // 4. Bind to the UI
-                MyGroupsListBox.ItemsSource = null;
+                // 4. עדכון ה-UI
                 MyGroupsListBox.ItemsSource = myGroups;
-
-                AllGroupsListBox.ItemsSource = null;
                 AllGroupsListBox.ItemsSource = otherGroups;
+            
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading data: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
