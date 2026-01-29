@@ -45,21 +45,21 @@
     </UserControl.Resources>
 
     <!-- Container -->
-    <Border Background="White"
+    <!--<Border Background="White"
             CornerRadius="0 0 18 18"
-            Padding="12"
+            Padding="0"
             Effect="{StaticResource SoftShadow}">
 
         <DockPanel>
 
-            <!-- Title -->
+            --><!-- Title --><!--
             <TextBlock Text="Tools"
                        DockPanel.Dock="Left"
                        FontSize="18"
                        FontWeight="Bold"
                        Margin="8 0 20 0"/>
 
-            <!-- Buttons -->
+            --><!-- Buttons --><!--
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
 
@@ -82,5 +82,5 @@
             </StackPanel>
 
         </DockPanel>
-    </Border>
+    </Border>-->
 </UserControl>

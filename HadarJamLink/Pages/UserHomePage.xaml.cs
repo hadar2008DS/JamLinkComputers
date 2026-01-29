@@ -340,5 +340,13 @@ namespace JamLinkComputers
                 Margin = new Thickness(20)
             };
         }
+
+        private void ToggleSideBar_Click(object sender, RoutedEventArgs e)
+        {
+            if (SideBarColumn.Width.Value > 0)
+                SideBarColumn.Width = new GridLength(0); // Close fully
+            else
+                SideBarColumn.Width = new GridLength(120); // Open
+        }
     }
 }

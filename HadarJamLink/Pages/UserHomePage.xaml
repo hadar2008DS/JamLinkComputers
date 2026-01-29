@@ -8,31 +8,27 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Tabs -->
             <RowDefinition Height="*"/>
-            <!-- Content -->
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <!-- Sidebar -->
+            <!-- Sidebar column רחבה מספיק -->
+            <ColumnDefinition x:Name="SideBarColumn" Width="200"/>
             <ColumnDefinition Width="*"/>
-            <!-- Main -->
         </Grid.ColumnDefinitions>
 
         <!-- ================= SIDEBAR ================= -->
         <Border x:Name="SideBar"
             Grid.RowSpan="2"
             Grid.Column="0"
-            Width="120"
             Background="#F4F5F9"
-            Padding="8">
+            Padding="8"
+            VerticalAlignment="Stretch">
 
-            <StackPanel>
-                <uc:SideBarBTN x:Name="SideBarBTN"
-                           Loaded="SideBarBTN_Loaded"/>
-                <uc:TopToolsBar x:Name="TopToolsBar"
-                            Grid.Row="0" Grid.Column="1"/>
+            <StackPanel Orientation="Vertical">
+                <!-- Sidebar buttons -->
+                <uc:SideBarBTN x:Name="SideBarBTN" Loaded="SideBarBTN_Loaded"/>
+                <uc:TopToolsBar x:Name="TopToolsBar" Grid.Row="0" Grid.Column="1"/>
 
                 <Button x:Name="MusicianButton"
                     Content="Upload Segment"
@@ -50,32 +46,20 @@
         <TabControl Grid.Row="0"
                 Grid.Column="1"
                 Height="50">
-
             <TabItem Header=" Tools">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Tuner"
-                        
-                        Click="Tuner_Click"/>
-                    <Button Content="Scales"
-                        
-                        Click="Scales_Click"/>
-                    <Button Content="Chords"
-                        
-                        Click="Chords_Click"/>
-                    <Button Content="Metronome"
-                        
-                        Click="Metronome_Click"/>
+                    <Button Content="Tuner" Click="Tuner_Click"/>
+                    <Button Content="Scales" Click="Scales_Click"/>
+                    <Button Content="Chords" Click="Chords_Click"/>
+                    <Button Content="Metronome" Click="Metronome_Click"/>
                 </StackPanel>
             </TabItem>
 
             <TabItem Header="Help">
-                <StackPanel Orientation="Horizontal" >
-                    <Button Content="Tips"
-                        
-                        Click="Tips_Click"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Tips" Click="Tips_Click"/>
                 </StackPanel>
             </TabItem>
-
         </TabControl>
 
         <!-- ================= MAIN CONTENT ================= -->

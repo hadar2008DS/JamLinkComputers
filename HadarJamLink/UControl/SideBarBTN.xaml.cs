@@ -35,8 +35,8 @@ namespace JamLinkComputers.UControl
 
         private DispatcherTimer sidebarTimer;
         private bool isSidebarOpen = false;
-        private double closedWidth = 80;   // רוחב סגור
-        private double openWidth = 100;    // רוחב פתוח
+        private double closedWidth = 20;   // רוחב סגור
+        private double openWidth = 140;    // רוחב פתוח
         private int delayMs = 1000;        // זמן השהיה לפני סגירה (במילישניות)
 
 
@@ -44,8 +44,10 @@ namespace JamLinkComputers.UControl
         public SideBarBTN()
         {
             InitializeComponent();
-            sidebarTimer = new DispatcherTimer();
-            sidebarTimer.Interval = TimeSpan.FromMilliseconds(1000); // אפשר לשנות את הזמן
+            sidebarTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(5) // 5 שניות
+            };
             sidebarTimer.Tick += SidebarTimer_Tick;
         }
 
@@ -100,44 +102,48 @@ namespace JamLinkComputers.UControl
 
         private void SideBar_MouseEnter(object sender, MouseEventArgs e)
         {
-            // מפסיקים את הטיימר אם הוא רץ
-            sidebarTimer.Stop();
-
-            // פותחים את הסיידבר אם סגור
             if (!isSidebarOpen)
             {
-                AnimateSidebar(openWidth);
+                AnimateSidebar(openWidth);  // שולח את הערך הפתוח
                 isSidebarOpen = true;
             }
         }
 
-        // כשהעכבר יוצא
         private void SideBar_MouseLeave(object sender, MouseEventArgs e)
         {
-            // מתחילים את הטיימר – אחרי ההשהיה הוא יסגור את הסיידבר
-            sidebarTimer.Start();
+            AnimateSidebar(closedWidth);   // שולח את הערך הסגור
+            isSidebarOpen = false;
         }
 
-        // אירוע הטיימר
         private void SidebarTimer_Tick(object sender, EventArgs e)
         {
             AnimateSidebar(closedWidth);
+            //FadeText(0);
             isSidebarOpen = false;
 
             sidebarTimer.Stop();
         }
 
-        // ================= פונקציה לאנימציה =================
+        // ================= ANIMATIONS =================
         private void AnimateSidebar(double targetWidth)
         {
-            DoubleAnimation animation = new DoubleAnimation
+            SideBar.BeginAnimation(WidthProperty, new DoubleAnimation
             {
+                From = SideBar.ActualWidth,           // מתחיל מהרוחב הנוכחי
                 To = targetWidth,
-                Duration = TimeSpan.FromMilliseconds(300), // משך האנימציה
-                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut } // חלקה
-            };
-
-            SideBar.BeginAnimation(WidthProperty, animation);
+                Duration = TimeSpan.FromMilliseconds(300),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
+            });
         }
+
+
+        //private void FadeText(double opacity)
+        //{
+        //    WelcomeText.BeginAnimation(OpacityProperty, new DoubleAnimation
+        //    {
+        //        To = opacity,
+        //        Duration = TimeSpan.FromMilliseconds(200)
+        //    });
+        //}
     }
 }
