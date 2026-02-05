@@ -7,6 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White" >
     <Grid>
+
+        <ComboBox x:Name="InstrumentSelector" Width="120" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+              SelectedIndex="0" SelectionChanged="InstrumentSelector_SelectionChanged">
+            <ComboBoxItem Content="Select Instrument"/>
+            <ComboBoxItem Content="Guitar"/>
+            <ComboBoxItem Content="Bass"/>
+            <ComboBoxItem Content="Ukelele"/>
+        </ComboBox>
         <!-- עיגול מרכזי -->
         <Ellipse Width="150" Height="150" Stroke="Black" StrokeThickness="3"
                  HorizontalAlignment="Center" VerticalAlignment="Center"/>

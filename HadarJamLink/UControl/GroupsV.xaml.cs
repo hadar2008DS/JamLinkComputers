@@ -3,6 +3,7 @@ using Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.Design;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -25,9 +27,10 @@ namespace JamLinkComputers.UControl
     /// </summary>
     public partial class GroupsV : UserControl
     {
-        ApiService ApiService = new ApiService();
-        List<Model.Group> allGroups = new List<Model.Group>();
-        private Person currentUser;
+
+        ApiService apiService = new ApiService();
+        Person currentUser;
+        private List<Model.Group> allAvailableGroups;
         public GroupsV(Person loggedInUser)
         {
             InitializeComponent();
@@ -39,200 +42,204 @@ namespace JamLinkComputers.UControl
         {
             try
             {
-                // טעינת הנתונים למשתנה של המחלקה (בלי var)
-                allGroups = await ApiService.GetGroups();
-                var allMemberships = await ApiService.GetGroupMembers();
+                GroupList allGroups = await apiService.GetGroups();
+                GroupMembersList allGroupMembers = await apiService.GetGroupMembers();
 
-                if (allGroups == null || allMemberships == null) return;
+                var myGroupMembers = allGroupMembers
+                    .Where(gm => gm.Id == currentUser.Id)
+                    .ToList();
 
-                // תיקון הסינון - מחפשים את ה-PersonId בתוך החברות
-                var myGroupIds = allMemberships
-                .Where(m => m.Group != null && m.Id == currentUser.Id)
-                .Select(m => m.Group.Id)
-                .ToList();
+                var myGroupIds = myGroupMembers
+                    .Select(gm => gm.Group.Id)
+                    .ToList();
 
-                var myGroups = allGroups.Where(g => myGroupIds.Contains(g.Id)).ToList();
-                var otherGroups = allGroups.Where(g => !myGroupIds.Contains(g.Id)).ToList();
+                allAvailableGroups = allGroups
+                    .Where(g => !myGroupIds.Contains(g.Id))
+                    .ToList();
 
-                // 4. עדכון ה-UI
-                MyGroupsListBox.ItemsSource = myGroups;
-                AllGroupsListBox.ItemsSource = otherGroups;
-            
+                MyGroupsListBox.ItemsSource = myGroupMembers;
+                AvailableGroupsListBox.ItemsSource = allAvailableGroups;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show("Error loading groups: " + ex.Message);
             }
         }
 
         // אפשרות עריכה לקבוצות של המשתמש
         private async void EditGroup_Click(object sender, RoutedEventArgs e)
         {
-            var group = (sender as Button).Tag as Model.Group;
-            if (group == null) return;
+            Button btn = sender as Button;
+            GroupMembers gm = btn?.DataContext as GroupMembers;
 
-            string newName = Microsoft.VisualBasic.Interaction.InputBox("Edit Group Name:", "Edit", group.GroupName);
+            if (gm == null)
+                return;
 
-            if (!string.IsNullOrWhiteSpace(newName) && newName != group.GroupName)
+            try
             {
-                // 1. עדכון מקומי זמני
-                string oldName = group.GroupName;
-                group.GroupName = newName;
-
-                // 2. שליחה לשרת - חשוב מאוד!
-                int result = await ApiService.UpdateGroup(group);
-
-                if (result > 0)
-                {
-                    MessageBox.Show("Name updated!");
-                    LoadData(); // טעינה מחדש מהמסד כדי לוודא סנכרון מלא
-                }
-                else
-                {
-                    MessageBox.Show("Failed to update database.");
-                    group.GroupName = oldName; // החזרה לשם הקודם אם נכשל
-                }
+                await apiService.UpdateGroupAsync(gm.Group);
+                MessageBox.Show("Group updated successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to update group: " + ex.Message);
             }
         }
 
         private async void JoinGroup_Click(object sender, RoutedEventArgs e)
         {
-            // 1. חילוץ האובייקט של הקבוצה מהכפתור
-            var btn = sender as Button;
-            var group = btn.Tag as Model.Group;
+            Button btn = sender as Button;
+            Model.Group group = btn?.DataContext as Model.Group;
 
-            if (group == null) return;
-
-            // 2. בדיקה אופציונלית - האם הקבוצה כבר פעילה? (למניעת לחיצות כפולות)
-            if (group.IsActive)
-            {
-                MessageBox.Show("You are already a member of this group.");
+            if (group == null)
                 return;
-            }
 
             try
             {
-                // 3. עדכון הסטטוס ל-True
-                group.IsActive = true;
-
-                // 4. שליחת העדכון למסד הנתונים דרך ה-API
-                // אנחנו משתמשים באותה פונקציית Update ששימשה אותנו ב-Leave
-                int result = await ApiService.UpdateGroup(group);
-
-                if (result > 0)
+                GroupMembers gm = new GroupMembers
                 {
-                    MessageBox.Show($"Successfully joined '{group.GroupName}'!");
+                    Id = currentUser.Id,
+                    Group = group
+                };
 
-                    // 5. רענון הנתונים - זה יגרום לקבוצה "לקפוץ" ללשונית My Groups
-                    LoadData();
-                }
-                else
-                {
-                    MessageBox.Show("Could not join the group. Please try again later.");
-                    // החזרת המצב לקדמותו בזיכרון המקומי במקרה של כישלון
-                    group.IsActive = false;
-                }
+                await apiService.InsertGroupMember(gm);
+                MessageBox.Show("Joined group successfully!");
+
+                LoadData(); // רענון
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error joining group: " + ex.Message);
+                MessageBox.Show("Failed to join group: " + ex.Message);
             }
         }
 
         private async void LeaveGroup_Click(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            var group = btn.Tag as Model.Group;
+            Button btn = sender as Button;
+            GroupMembers gm = btn?.DataContext as GroupMembers;
 
-            if (group == null) return;
-
-            // הצגת דיאלוג אישור
-            var confirm = MessageBox.Show($"Are you sure you want to leave {group.GroupName}?", "Leave Group", MessageBoxButton.YesNo);
-            if (confirm != MessageBoxResult.Yes) return;
+            if (gm == null)
+                return;
 
             try
             {
-                // 1. שינוי הסטטוס ל-false
-                group.IsActive = false;
+                await apiService.DeleteGroupMember(gm.Id);
+                MessageBox.Show("You left the group.");
 
-                // 2. עדכון השרת (חובה להשתמש ב-await)
-                int result = await ApiService.UpdateGroup(group);
-
-                if (result > 0)
-                {
-                    // 3. רענון כל הממשק - זה יגרום לקבוצה לעבור ללשונית "All Groups"
-                    LoadData();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to update the server. Please try again.");
-                    group.IsActive = true; // החזרת המצב בזיכרון למקרה של כישלון
-                }
+                LoadData(); // רענון כמו אחרי Login
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("Failed to leave group: " + ex.Message);
             }
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string search = SearchBox.Text.ToLower();
-            MyGroupsListBox.ItemsSource = allGroups.Where(g => g.IsActive && g.GroupName.ToLower().Contains(search)).ToList();
-            AllGroupsListBox.ItemsSource = allGroups.Where(g => !g.IsActive && g.GroupName.ToLower().Contains(search)).ToList();
+            if (allAvailableGroups == null)
+                return;
+
+            string text = SearchBox.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(text))
+            {
+                AvailableGroupsListBox.ItemsSource = allAvailableGroups;
+            }
+            else
+            {
+                var filtered = allAvailableGroups
+                    .Where(g => g.GroupName != null &&
+                                g.GroupName.ToLower().Contains(text))
+                    .ToList();
+
+                AvailableGroupsListBox.ItemsSource = filtered;
+            }
         }
 
         private async void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
-            // 1. קבלת שם הקבוצה מהמשתמש
-            string groupName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Enter the name of the new group:",
-                "Create New Group",
-                "New Group Name");
+            //string groupName = NewGroupNameBox.Text?.Trim();
 
-            // 2. בדיקת תקינות
-            if (string.IsNullOrWhiteSpace(groupName))
-            {
-                return;
-            }
+            //// 1️⃣ בדיקות קלט (כמו Login)
+            //if (string.IsNullOrWhiteSpace(groupName))
+            //{
+            //    MessageBox.Show("Please enter a group name.");
+            //    NewGroupNameBox.Focus();
+            //    return;
+            //}
 
-            try
-            {
-                // 3. בניית אובייקט הקבוצה
-                var newGroup = new Model.Group
-                {
-                    GroupName = groupName,
-                    CreationDate = DateTime.Now,
-                    IsActive = true
-                };
+            //if (groupName.Length > 30)
+            //{
+            //    MessageBox.Show("Group name must be at most 30 characters.");
+            //    NewGroupNameBox.Focus();
+            //    return;
+            //}
 
-                // 4. שליחה ל-API - עכשיו ה-await יעבוד בלי שגיאה
-                int newId = await ApiService.InsertGroup(newGroup);
+            //try
+            //{
+            //    // 2️⃣ יצירת אובייקט Group
+            //    Model.Group newGroup = new Model.Group
+            //    {
+            //        GroupName = groupName,
+            //        CreationDate = DateTime.Now,
+            //        IsActive = true
+            //    };
 
-                if (newId > 0)
-                {
-                    newGroup.Id = newId; // נותנים לו את ה-ID שחזר
+            //    // 3️⃣ שליחה לשרת
+            //    int result = await apiService.InsertGroup(newGroup);
 
-                    // הוספה ידנית לרשימה בזיכרון
-                    allGroups.Add(newGroup);
+            //    if (result <= 0)
+            //    {
+            //        MessageBox.Show("Failed to create group.");
+            //        return;
+            //    }
 
-                    // עדכון ה-UI ללא תלות בטעינה מהשרת (לבדיקה)
-                    MyGroupsListBox.ItemsSource = null;
-                    MyGroupsListBox.ItemsSource = allGroups.Where(g => g.IsActive).ToList();
+            //    MessageBox.Show("Group created successfully!");
 
-                    MessageBox.Show("Group Created!");
-                }
-                else
-                {
-                    MessageBox.Show("Failed to create the group. Please try again.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred: " + ex.Message);
-            }
+            //    // 4️⃣ ניקוי שדה
+            //    NewGroupNameBox.Text = string.Empty;
 
+            //    // 5️⃣ רענון הרשימות
+            //    LoadData();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error creating group: " + ex.Message);
+            //}
         }
 
+        private void ViewGroupDetails_Click(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void UpdateGroup_Click(object sender, RoutedEventArgs e)
+        {
+            //// בדיקה שנבחרה קבוצה
+            //if (AllGroupsListBox.SelectedItem == null)
+            //{
+            //    MessageBox.Show("בחר קבוצה לעדכון");
+            //    return;
+            //}
+
+            //// בדיקה שהשם לא ריק
+            //if (string.IsNullOrWhiteSpace(GroupNameTextBox.Text))
+            //{
+            //    MessageBox.Show("שם קבוצה לא יכול להיות ריק");
+            //    return;
+            //}
+
+            //// הקבוצה שנבחרה
+            //Group selectedGroup = (Group)AllGroupsListBox.SelectedItem;
+
+            //// עדכון שדות
+            //selectedGroup.GroupName = GroupNameTextBox.Text;
+            //selectedGroup.IsActive = IsActiveCheckBox.IsChecked ?? false;
+
+            //// רענון ה־ListBox
+            //AllGroupsListBox.Items.Refresh();
+
+            //MessageBox.Show("הקבוצה עודכנה בהצלחה");
+        }
     }
 }
