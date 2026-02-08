@@ -211,7 +211,7 @@ namespace JamLinkComputers
             await LoadUserRole();
 
             // ברירת מחדל
-            LoadView(new HomeV());
+            LoadView(new HomeV(currentUser));
         }
 
         // ================= ROLE LOGIC =================
@@ -243,7 +243,7 @@ namespace JamLinkComputers
             switch (menu)
             {
                 case "Home":
-                    LoadView(new HomeV());
+                    LoadView(new HomeV(currentUser));
                     break;
 
                 case "Profile":
