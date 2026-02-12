@@ -35,9 +35,9 @@ namespace JamLinkComputers.UControl
 
         private DispatcherTimer sidebarTimer;
         private bool isSidebarOpen = false;
-        private double closedWidth = 20;   // רוחב סגור
-        private double openWidth = 140;    // רוחב פתוח
-        private int delayMs = 1000;        // זמן השהיה לפני סגירה (במילישניות)
+        private double closedWidth = 20;   
+        private double openWidth = 140;   
+        private int delayMs = 1000;        // זמן השהיה לפני סגירה במילישניות
 
 
         
@@ -46,7 +46,7 @@ namespace JamLinkComputers.UControl
             InitializeComponent();
             sidebarTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromSeconds(5) // 5 שניות
+                Interval = TimeSpan.FromSeconds(5) // 5 sec
             };
             sidebarTimer.Tick += SidebarTimer_Tick;
         }
@@ -104,14 +104,14 @@ namespace JamLinkComputers.UControl
         {
             if (!isSidebarOpen)
             {
-                AnimateSidebar(openWidth);  // שולח את הערך הפתוח
+                AnimateSidebar(openWidth);  // open value
                 isSidebarOpen = true;
             }
         }
 
         private void SideBar_MouseLeave(object sender, MouseEventArgs e)
         {
-            AnimateSidebar(closedWidth);   // שולח את הערך הסגור
+            AnimateSidebar(closedWidth);   // closed value
             isSidebarOpen = false;
         }
 
@@ -129,7 +129,7 @@ namespace JamLinkComputers.UControl
         {
             SideBar.BeginAnimation(WidthProperty, new DoubleAnimation
             {
-                From = SideBar.ActualWidth,           // מתחיל מהרוחב הנוכחי
+                From = SideBar.ActualWidth,           // starts from static width
                 To = targetWidth,
                 Duration = TimeSpan.FromMilliseconds(300),
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }

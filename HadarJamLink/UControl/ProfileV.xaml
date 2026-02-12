@@ -6,21 +6,124 @@
              xmlns:local="clr-namespace:JamLinkComputers.UControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
-        <StackPanel>
+    <Grid Background="#0B0E21">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-            <!-- Title -->
-            <TextBlock Text="Profile"
-                   FontSize="22"
-                   FontWeight="Bold"/>
+            <StackPanel >
 
-            <!-- Username -->
-            <TextBlock x:Name="UserNameText"
-                   FontSize="16"/>
+                <Border Background="#3C205E" CornerRadius="15" Padding="25">
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock x:Name="GreetingText" FontSize="28" FontWeight="Bold" Foreground="#FFD55F"/>
+                            <TextBlock x:Name="RoleText" FontSize="16" Foreground="#A0A0A0" Margin="0,5,0,0"/>
+                        </StackPanel>
 
-            <!-- Status -->
-            <TextBlock x:Name="StatusText"
-                   FontSize="14"/>
-        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="Active:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <ToggleButton x:Name="ActiveToggle" Width="60" Height="25" 
+                                      Checked="ActiveToggle_Changed" Unchecked="ActiveToggle_Changed"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="MusicianCard" 
+                    Background="#252545" 
+                    Padding="20" 
+                    Visibility="Collapsed" 
+                    BorderBrush="#FFD55F" 
+                    BorderThickness="0,0,0,2">
+                    <StackPanel>
+                        <Grid>
+                            <TextBlock Text="🎸 Musician Profile" FontSize="20" FontWeight="Bold" Foreground="#FFD55F"/>
+                            <TextBlock x:Name="InstrumentText" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16"/>
+                        </Grid>
+
+                        <Separator Background="#444"/>
+
+                        <TextBlock Text="My Groups &amp; Projects" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,10"/>
+
+                        <ItemsControl x:Name="GroupsList">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#3C205E" CornerRadius="4" Padding="12,6" Margin="0,0,8,8">
+                                        <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border x:Name="ProducerCard" 
+                    Background="#1B1B2F" 
+                    Padding="20" 
+                    Visibility="Collapsed"
+                    BorderBrush="#4DB8FF" 
+                    BorderThickness="0,0,0,2">
+                    <StackPanel>
+                        <TextBlock Text="💻 Producer Suite" FontSize="20" FontWeight="Bold" Foreground="#4DB8FF" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="DAW &amp; Applications" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,10"/>
+
+                        <ItemsControl x:Name="AppsList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#252545" Padding="10" Margin="0,0,0,1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Width="6" Height="6" Fill="#4DB8FF" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding AppName}" Foreground="White" FontSize="14"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+
+                <Border Background="#1B1B2F" Padding="20" BorderBrush="#FFD55F" BorderThickness="0,1,0,0">
+                    <StackPanel>
+                        <TextBlock Text=" Account Settings" FontSize="20" FontWeight="Bold" Foreground="#FFD55F"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel >
+                                <TextBlock Text="New Username:" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,5"/>
+                                <TextBox x:Name="NewUsernameInput" Background="#252545" Foreground="White" BorderThickness="1"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="New Password:" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,5"/>
+                                <PasswordBox x:Name="NewPasswordInput" Background="#252545" Foreground="White" BorderThickness="1"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="2" Content="Update Profile" Click="UpdateDetails_Click" 
+                            Background="#FFD55F" Foreground="#0B0E21" Padding="15,0" Height="40" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+
+           
+        </ScrollViewer>
     </Grid>
 </UserControl>

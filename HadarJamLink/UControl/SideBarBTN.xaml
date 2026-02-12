@@ -44,7 +44,7 @@
                     Content="Groups"
                     Click="Groups_Click"/>
 
-                <Separator Margin="0,14"/>
+                <Separator/>
 
                 <Button x:Name="MusicianButton"
                     Style="{StaticResource SideBarButton}"
