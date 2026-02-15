@@ -52,5 +52,15 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Provide a fallback ModernButtonStyle so XAML references resolve -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF2D2D30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
     </Application.Resources>
 </Application>
