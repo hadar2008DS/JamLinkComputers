@@ -15,7 +15,7 @@
                     <Grid>
                         <StackPanel>
                             <TextBlock x:Name="GreetingText" FontSize="28" FontWeight="Bold" Foreground="#FFD55F"/>
-                            <TextBlock x:Name="RoleText" FontSize="16" Foreground="#A0A0A0" Margin="0,5,0,0"/>
+                            <TextBlock x:Name="RoleText" FontSize="16" Foreground="#A0A0A0" />
                         </StackPanel>
 
                         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">

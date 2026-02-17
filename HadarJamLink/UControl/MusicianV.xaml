@@ -8,25 +8,24 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#1A1A2E">
         <ScrollViewer>
-            <StackPanel >
+            <StackPanel>
 
-                <!-- 🎸 INSTRUMENTS -->
+                <!-- 🎸 Instruments -->
                 <TextBlock Text="🎸 Manage Instruments"
                        Foreground="#FFD700"
                        FontSize="20"
-                       FontWeight="Bold"
-                       />
+                       FontWeight="Bold"/>
 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" >
                     <ComboBox x:Name="AllInstrumentsCombo"
                           Width="200"
                           DisplayMemberPath="InstrumentName"
-                          Background="#16213E"
-                          Foreground="White"/>
+                          Background="White"/>
 
                     <Button Content="Add"
                         Click="AddInstrument_Click"
-                        Style="{StaticResource ModernButtonStyle}"/>
+                        
+                        Width="80"/>
                 </StackPanel>
 
                 <ListBox x:Name="InstrumentsListBox"
@@ -37,90 +36,91 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <DockPanel>
-                                <Button Content="🗑️"
-                                    Click="DeleteInstrument_Click"
-                                    DockPanel.Dock="Right"
-                                    Background="Transparent"
-                                    BorderThickness="0"/>
 
-                                <TextBlock Text="{Binding InstrumentName}"
-                                       Foreground="White"/>
+                                <Button Content="🗑"
+                                    Width="40"
+                                    Click="DeleteInstrument_Click"
+                                    DockPanel.Dock="Right"/>
+
+                                <TextBlock Text="{Binding Instruments.InstrumentName}"
+                                       Foreground="White"
+                                       VerticalAlignment="Center"/>
                             </DockPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <!-- 🎵 GENRES -->
+                <!-- 🎵 Genres -->
                 <TextBlock Text="🎵 Genres"
                        Foreground="#00D2FF"
                        FontSize="20"
-                       FontWeight="Bold"/>
+                       FontWeight="Bold"
+                       />
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox x:Name="NewGenreTextBox"
                          Width="200"
-                         Background="#16213E"
-                         Foreground="White"/>
+                         Background="White"/>
 
                     <Button Content="Add Genre"
                         Click="AddGenre_Click"
-                        Style="{StaticResource ModernButtonStyle}"/>
+                       
+                        Width="100"/>
                 </StackPanel>
 
                 <ListBox x:Name="GenresListBox"
                      Height="100"
                      Background="#16213E"
-                     BorderBrush="#00D2FF"/>
+                     BorderBrush="#00D2FF"
+                     />
 
-                <!-- 💻 SEGMENTS -->
-                <TextBlock Text=" Segments"
+                <!-- 💻 Segments -->
+                <TextBlock Text="💻 Segments"
                        Foreground="MediumPurple"
                        FontSize="20"
-                       FontWeight="Bold"/>
+                       FontWeight="Bold"
+                       />
 
                 <DataGrid x:Name="SegmentsGrid"
                       AutoGenerateColumns="False"
+                      CanUserAddRows="False"
                       Background="#16213E"
-                      RowBackground="#1A1A2E"
-                      Foreground="White"
-                      CanUserAddRows="False">
+                      Foreground="White">
 
                     <DataGrid.Columns>
-
                         <DataGridTextColumn Header="Name"
-                        Binding="{Binding SegmentName, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-
+                            Binding="{Binding SegmentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        
                         <DataGridTextColumn Header="Length"
-                        Binding="{Binding LengthInSeconds}" Width="70"/>
+                         Binding="{Binding LengthInSeconds, Mode=TwoWay}" />
 
                         <DataGridTextColumn Header="BPM"
-                        Binding="{Binding Bpm}" Width="60"/>
+                            Binding="{Binding Bpm, Mode=TwoWay}" />
 
                         <DataGridTextColumn Header="Key"
-                        Binding="{Binding Key}" Width="60"/>
+                            Binding="{Binding Key, Mode=TwoWay}" />
 
                         <DataGridTextColumn Header="Mood"
-                        Binding="{Binding Mood}" Width="100"/>
+                        Binding="{Binding Mood, Mode=TwoWay}" />
 
                         <DataGridTextColumn Header="Genre"
-                        Binding="{Binding Genre}" Width="100"/>
+                            Binding="{Binding Genre, Mode=TwoWay}" />
 
                         <DataGridTextColumn Header="Link"
-                        Binding="{Binding Link}" Width="150"/>
+                        Binding="{Binding Link, Mode=TwoWay}" />
 
                         <DataGridTemplateColumn Header="Save">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="💾"
                                         Click="UpdateSegment_Click"
-                                        Background="#FFD700"
-                                        Foreground="Black"/>
+                                        Width="40"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-
                     </DataGrid.Columns>
                 </DataGrid>
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

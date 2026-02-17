@@ -1,4 +1,5 @@
 ﻿using ClientSide;
+using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.VisualBasic.Logging;
 using Model;
 using NAudio.SoundFont;
@@ -31,6 +32,8 @@ namespace JamLinkComputers.UControl
         private ApiService apiService = new ApiService();
 
         private List<MusicalSegments> allMySegments = new();
+        private List<MusicianInstruments> myRelations = new();
+
 
         // Add this field to your class to represent the BPM slider control
         private System.Windows.Controls.Slider BPMSlider;
@@ -42,9 +45,8 @@ namespace JamLinkComputers.UControl
         {
             InitializeComponent();
             this.currentUser = loggedInUser;
-            //BPMSlider.ValueChanged += FilterChanged;
-            //GenreFilter.SelectionChanged += FilterChanged;
-            LoadMusicianData();
+            if (currentUser != null)
+                LoadMusicianData();
         }
 
         private async void LoadMusicianData()
@@ -66,17 +68,40 @@ namespace JamLinkComputers.UControl
         {
             var relations = await apiService.GetMusicianInstruments();
 
-            var myInstrumentIds = relations
+            myRelations = relations
                 .Where(r => r.Musician.Id == currentUser.Id)
-                .Select(r => r.Instruments.Id)
                 .ToList();
 
-            var instruments = await apiService.GetInstruments();
-
-            InstrumentsListBox.ItemsSource = instruments
-                .Where(i => myInstrumentIds.Contains(i.Id))
-                .ToList();
+            InstrumentsListBox.ItemsSource = myRelations;
         }
+
+        private async Task LoadAllInstrumentsForCombo()
+        {
+            var allInstruments = await apiService.GetInstruments();
+            AllInstrumentsCombo.ItemsSource = allInstruments;
+        }
+
+        private async void AddInstrument_Click(object sender, RoutedEventArgs e)
+        {
+            if (AllInstrumentsCombo.SelectedItem is Instruments instrument)
+            {
+                var relation = new MusicianInstruments
+                {
+                    Musician = null,  // לא שולחים אובייקט מלא
+                    Instruments = null
+                };
+
+                // יוצרים אובייקטים מינימליים עם Id בלבד
+                relation.Musician = new Musician { Id = currentUser.Id };
+                relation.Instruments = new Instruments { Id = instrument.Id };
+
+                int result = await apiService.InsertMusicianInstrument(relation);
+
+                if (result > 0)
+                    await LoadInstruments();
+            }
+        }
+
 
         private async Task LoadSegments()
         {
@@ -91,47 +116,49 @@ namespace JamLinkComputers.UControl
 
         private async void UpdateSegment_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is System.Windows.Forms.Button btn &&
+            // לוודא שהעריכה מה-DataGrid נשמרה באובייקט
+            SegmentsGrid.CommitEdit();
+            SegmentsGrid.CommitEdit();
+
+            if (sender is System.Windows.Controls.Button btn &&
                 btn.DataContext is MusicalSegments segment)
             {
-                var result = await apiService.UpdateMusicalSegment(segment);
+                // שולחים רק Id – לא אובייקט מלא
+                segment.Musician.Id = currentUser.Id;
+                segment.Musician = null;   // חשוב מאוד!
+
+                int result = await apiService.UpdateMusicalSegment(segment);
 
                 if (result > 0)
-                    System.Windows.MessageBox.Show("Segment updated!");
+                    System.Windows.MessageBox.Show("Segment updated successfully!");
                 else
                     System.Windows.MessageBox.Show("Update failed.");
             }
         }
-        private async Task LoadAllInstrumentsForCombo()
-        {
-            var allInstruments = await apiService.GetInstruments();
-            AllInstrumentsCombo.ItemsSource = allInstruments;
-        }
 
-        private async void AddInstrument_Click(object sender, RoutedEventArgs e)
-        {
-            if (AllInstrumentsCombo.SelectedItem is Instruments instrument)
-            {
-                var relation = new MusicianInstruments
-                {
-                    Musician = currentUser as Musician,
-                    Instruments = instrument
-                };
+        //private async void AddInstrument_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (AllInstrumentsCombo.SelectedItem is Instruments instrument)
+        //    {
+        //        var relation = new MusicianInstruments
+        //        {
+        //            Musician = new Musician { Id = currentUser.Id },
+        //            Instruments = new Instruments { Id = instrument.Id }
+        //        };
 
-                int result = await apiService.InsertMusicianInstrument(relation);
+        //        int result = await apiService.InsertMusicianInstrument(relation);
 
-                if (result > 0)
-                    await LoadInstruments();
-            }
-        }
+        //        if (result > 0)
+        //            await LoadInstruments();
+        //    }
+        //}
 
         private async void DeleteInstrument_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is System.Windows.Forms.Button btn &&
-                btn.DataContext is Instruments instrument)
+            if (sender is System.Windows.Controls.Button btn &&
+                btn.DataContext is MusicianInstruments relation)
             {
-                // Use only the musician instrument ID as per the method signature
-                int result = await apiService.DeleteMusicianInstrument(instrument.Id);
+                int result = await apiService.DeleteMusicianInstrument(relation.Id);
 
                 if (result > 0)
                     await LoadInstruments();
@@ -156,15 +183,25 @@ namespace JamLinkComputers.UControl
             if (string.IsNullOrWhiteSpace(newGenre))
                 return;
 
-            allMySegments.Add(new MusicalSegments
+            var newSegment = new MusicalSegments
             {
-                Musician = currentUser as Musician,
-                Genre = newGenre
-                // Add other required properties if needed
-            });
+                SegmentName = "New Segment",
+                Genre = newGenre,
+                Lengthinseconds = 60,
+                Bpm = 120,
 
-            await LoadGenres();
-            NewGenreTextBox.Clear();
+                // Set the Musician property with only the Id set
+                Musician = new Musician { Id = currentUser.Id }
+            };
+
+            int result = await apiService.InsertMusicalSegment(newSegment);
+
+            if (result > 0)
+            {
+                await LoadSegments();
+                await LoadGenres();
+                NewGenreTextBox.Clear();
+            }
         }
 
     }
