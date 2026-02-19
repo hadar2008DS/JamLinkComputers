@@ -36,6 +36,7 @@
                 <StackPanel HorizontalAlignment="Center">
 
                     <TextBlock Text="Loading..."
+                           FontFamily="{StaticResource OswaldFont}"
                            FontSize="18"
                            Foreground="White"
                            HorizontalAlignment="Center"/>

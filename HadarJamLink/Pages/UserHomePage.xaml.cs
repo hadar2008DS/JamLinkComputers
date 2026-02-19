@@ -21,6 +21,10 @@ namespace JamLinkComputers
         private Person currentUser;
         private MetronomeControl metronomeInstance;
         private TunerControl TunerInstance;
+        private ChordsControl ChordsInstance;
+        private ScalesControl ScalesInstance;
+
+
 
         public UserHomePage(Person user)
         {
@@ -286,22 +290,19 @@ namespace JamLinkComputers
 
         private UIElement CreateScalesView()
         {
-            return new TextBlock
-            {
-                Text = " Scales Tool",
-                FontSize = 26,
-                Margin = new Thickness(20)
-            };
+            
+            if (ScalesInstance == null)
+                ScalesInstance = new ScalesControl();
+
+            return ScalesInstance;
         }
 
         private UIElement CreateChordsView()
         {
-            return new TextBlock
-            {
-                Text = " Chords Tool",
-                FontSize = 26,
-                Margin = new Thickness(20)
-            };
+            if (ChordsInstance == null)
+                ChordsInstance = new ChordsControl();
+
+            return ChordsInstance;
         }
 
         private UIElement CreateMetronomeView()

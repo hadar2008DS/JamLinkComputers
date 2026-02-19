@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:JamLinkComputers.UControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border Background="#0B0E21" BorderBrush="#3C205E" BorderThickness="2" CornerRadius="15" Width="140" Height="120" Margin="10">
+    <Border Background="#0B0E21" BorderBrush="#3C205E" BorderThickness="2" CornerRadius="15" Width="140" Height="120" Margin="10" >
         <StackPanel VerticalAlignment="Center">
-            <TextBlock x:Name="IconTxt" FontSize="22" HorizontalAlignment="Center" Foreground="#FFD55F"/>
-            <TextBlock x:Name="TitleTxt" Foreground="White" FontWeight="Bold" TextAlignment="Center" Margin="5,0"/>
-            <TextBlock x:Name="SubTxt" Foreground="Gray" FontSize="9" TextAlignment="Center"/>
+            <TextBlock x:Name="IconTxt" FontSize="22" HorizontalAlignment="Center" Foreground="#FFD55F" FontFamily="{StaticResource OswaldFont}"/>
+            <TextBlock x:Name="TitleTxt" Foreground="White" FontWeight="Bold" TextAlignment="Center" Margin="5,0" FontFamily="{StaticResource OswaldFont}"/>
+            <TextBlock x:Name="SubTxt" Foreground="Gray" FontSize="9" TextAlignment="Center" FontFamily="{StaticResource OswaldFont}"/>
         </StackPanel>
     </Border>
 </UserControl>

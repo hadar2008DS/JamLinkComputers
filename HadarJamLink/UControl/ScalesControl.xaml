@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="JamLinkComputers.UControl.ScalesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JamLinkComputers.UControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+        <UserControl.Resources>
+            <Style x:Key="NoteButtonStyle" TargetType="ToggleButton">
+                <Setter Property="Background" Value="#3C205E"/>
+                <Setter Property="Foreground" Value="#FDCB58"/>
+                <Setter Property="BorderBrush" Value="#4D4D4D"/>
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <Setter Property="Padding" Value="10,12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="#FDCB58"/>
+                        <Setter Property="Foreground" Value="#3C205E"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ScaleButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="#2D1B4E"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="10,15"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#4A2B7A"/>
+                        <Setter Property="Foreground" Value="#FDCB58"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </UserControl.Resources>
+
+        <StackPanel>
+            <TextBlock Text="GUITAR SCALES" 
+               Foreground="#FDCB58" 
+               FontSize="22" 
+               FontWeight="Bold" 
+               />
+
+            <Separator Background="#FDCB58" Opacity="0.5"/>
+
+            <ItemsControl ItemsSource="{Binding AllNotes}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton Content="{Binding}" 
+                              Style="{StaticResource NoteButtonStyle}"
+                              IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                              Command="{Binding DataContext.SelectRootCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              CommandParameter="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <ItemsControl ItemsSource="{Binding AllScales}" Margin="10,25">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding}" 
+                        Style="{StaticResource ScaleButtonStyle}"
+                        Command="{Binding DataContext.SelectScaleCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Border Margin="15" Background="#0A0A1A" CornerRadius="8" BorderBrush="#3C205E" BorderThickness="2">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="SCALE NOTES" Foreground="#FDCB58" FontSize="12" Opacity="0.7" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding DisplayResult}" Foreground="White" FontSize="36" FontWeight="Bold" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    
+</UserControl>

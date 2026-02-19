@@ -24,7 +24,7 @@
 
             <StackPanel Grid.Column="0">
                 <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Padding="10,5">
-                    <TextBlock x:Name="StatsLabel" Text="Your Stats" FontSize="16"/>
+                    <TextBlock x:Name="StatsLabel" Text="Your Stats" FontFamily="{StaticResource OswaldFont}" FontSize="16"/>
                 </Border>
                 <Canvas x:Name="StatsCanvas" Height="250" >
                     <Path x:Name="GraphPath" Stroke="#6A309D" StrokeThickness="3"/>
