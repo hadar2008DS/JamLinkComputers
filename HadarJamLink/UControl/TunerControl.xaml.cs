@@ -60,14 +60,52 @@ namespace JamLinkComputers.UControl
         }
         private void StartMicrophone()
         {
-            waveIn = new WaveInEvent();
-            waveIn.WaveFormat = new WaveFormat(44100, 1);
-            waveIn.DataAvailable += WaveIn_DataAvailable;
-            waveIn.StartRecording();
+            try
+            {
+                // If there are no recording devices, inform the user and don't attempt to start
+                if (WaveIn.DeviceCount < 1)
+                {
+                    MessageBox.Show("no microphone detected");
+                    //, "Microphone", MessageBoxButton.OK, MessageBoxImage.Warning
+                    return;
+                }
+
+                // Clean up existing instance if present
+                if (waveIn != null)
+                {
+                    try
+                    {
+                        waveIn.DataAvailable -= WaveIn_DataAvailable;
+                        waveIn.StopRecording();
+                    }
+                    catch { /* ignore stop errors */ }
+                    finally
+                    {
+                        waveIn.Dispose();
+                        waveIn = null;
+                    }
+                }
+
+                // Create and configure new input device
+                waveIn = new WaveInEvent
+                {
+                    DeviceNumber = 0,
+                    WaveFormat = new WaveFormat(44100, 1)
+                };
+                waveIn.DataAvailable += WaveIn_DataAvailable;
+
+                // Start recording
+                waveIn.StartRecording();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unable to start microphone: {ex.Message}", "Microphone Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine("StartMicrophone error: " + ex);
+            }
         }
 
 
-    private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
             {
                 // הגנה למקרה שעדיין לא נבחר כלי בתיבת הבחירה
                 if (currentNotes == null) return;
