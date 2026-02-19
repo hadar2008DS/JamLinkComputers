@@ -21,6 +21,9 @@ namespace JamLinkComputers.UControl
     /// </summary>
     public partial class ScalesControl : UserControl
     {
+
+        //insperation:
+        //https://www.all-guitar-chords.com/scales
         public ScalesControl()
         {
             InitializeComponent();
