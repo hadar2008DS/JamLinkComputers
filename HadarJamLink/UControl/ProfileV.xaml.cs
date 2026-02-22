@@ -118,26 +118,46 @@ namespace JamLinkComputers.UControl
         {
             if (loggedInUser == null) return;
 
-            loggedInUser.IsActive = ActiveToggle.IsChecked ?? false;
+            bool isActive = ActiveToggle.IsChecked ?? false;
+            loggedInUser.IsActive = isActive;
+
+            // 1. Immediate UI Feedback (Before the API call)
+            UpdateStatusUI(isActive);
 
             try
             {
-                // קבלת התוצאה כ-int
                 int result = await apiService.UpdatePerson(loggedInUser);
 
-                // בדיקה: אם התוצאה גדולה מ-0, זה אומר שהעדכון הצליח
                 if (result > 0)
                 {
-                    ActiveToggle.ToolTip = "Status updated!";
+                    ActiveToggle.ToolTip = "Status synchronized with server!";
                 }
                 else
                 {
-                    MessageBox.Show("Update failed on server side.");
+                    // Revert UI if server update failed
+                    MessageBox.Show("Server update failed.");
+                    ActiveToggle.IsChecked = !isActive;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error updating status: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
+                ActiveToggle.IsChecked = !isActive; // Revert on error
+            }
+        }
+
+        // Helper method to handle the "Look" of the status
+        private void UpdateStatusUI(bool isActive)
+        {
+            if (isActive)
+            {
+                StatusLabel.Text = "Active";
+                StatusLabel.Foreground = new SolidColorBrush(Color.FromRgb(253, 203, 88)); // Your Gold (#FDCB58)
+            }
+            else
+            {
+                StatusLabel.Text = "Inactive";
+                StatusLabel.Foreground = Brushes.Gray;
             }
         }
 

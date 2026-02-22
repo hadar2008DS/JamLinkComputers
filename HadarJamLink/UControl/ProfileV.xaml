@@ -18,10 +18,31 @@
                             <TextBlock x:Name="RoleText" FontSize="16" Foreground="#A0A0A0" />
                         </StackPanel>
 
-                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock Text="Active:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <ToggleButton x:Name="ActiveToggle" Width="60" Height="25" 
-                                      Checked="ActiveToggle_Changed" Unchecked="ActiveToggle_Changed"/>
+                        <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top">
+                            <TextBlock x:Name="StatusLabel" 
+                       Text="Inactive" 
+                       Foreground="Gray" 
+                       VerticalAlignment="Center"  
+                       FontWeight="Bold"
+                       Margin="0,0,10,0"/>
+
+                            <ToggleButton x:Name="ActiveToggle" 
+                          Width="50" Height="20" 
+                          Checked="ActiveToggle_Changed" 
+                          Unchecked="ActiveToggle_Changed">
+                                <ToggleButton.Style>
+                                    <Style TargetType="ToggleButton">
+                                        <Setter Property="Background" Value="#3C205E"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Background" Value="#FDCB58"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+                            </ToggleButton>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -40,7 +61,7 @@
 
                         <Separator Background="#444"/>
 
-                        <TextBlock Text="My Groups &amp; Projects" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,10"/>
+                        <TextBlock Text="My Groups &amp; Projects" Foreground="#A0A0A0" FontSize="12" />
 
                         <ItemsControl x:Name="GroupsList">
                             <ItemsControl.ItemsPanel>
@@ -50,7 +71,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Background="#3C205E" CornerRadius="4" Padding="12,6" Margin="0,0,8,8">
+                                    <Border Background="#3C205E" CornerRadius="4" Padding="12,6">
                                         <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold"/>
                                     </Border>
                                 </DataTemplate>
@@ -66,20 +87,20 @@
                     BorderBrush="#4DB8FF" 
                     BorderThickness="0,0,0,2">
                     <StackPanel>
-                        <TextBlock Text="💻 Producer Suite" FontSize="20" FontWeight="Bold" Foreground="#4DB8FF" Margin="0,0,0,15"/>
+                        <TextBlock Text="💻 Producer Suite" FontSize="20" FontWeight="Bold" Foreground="#4DB8FF" />
 
-                        <TextBlock Text="DAW &amp; Applications" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,10"/>
+                        <TextBlock Text="DAW &amp; Applications" Foreground="#A0A0A0" FontSize="12" />
 
                         <ItemsControl x:Name="AppsList">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Background="#252545" Padding="10" Margin="0,0,0,1">
+                                    <Border Background="#252545" Padding="10">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Ellipse Width="6" Height="6" Fill="#4DB8FF" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                            <Ellipse Width="6" Height="6" Fill="#4DB8FF" VerticalAlignment="Center" />
                                             <TextBlock Grid.Column="1" Text="{Binding AppName}" Foreground="White" FontSize="14"/>
                                         </Grid>
                                     </Border>
@@ -106,12 +127,12 @@
                             </Grid.RowDefinitions>
 
                             <StackPanel >
-                                <TextBlock Text="New Username:" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,5"/>
+                                <TextBlock Text="New Username:" Foreground="#A0A0A0" FontSize="12" />
                                 <TextBox x:Name="NewUsernameInput" Background="#252545" Foreground="White" BorderThickness="1"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="New Password:" Foreground="#A0A0A0" FontSize="12" Margin="0,0,0,5"/>
+                                <TextBlock Text="New Password:" Foreground="#A0A0A0" FontSize="12" />
                                 <PasswordBox x:Name="NewPasswordInput" Background="#252545" Foreground="White" BorderThickness="1"/>
                             </StackPanel>
 

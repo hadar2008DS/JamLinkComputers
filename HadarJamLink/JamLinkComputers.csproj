@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Melanchall.DryWetMidi" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3800.47" />
     <PackageReference Include="NAudio" Version="2.2.1" />
   </ItemGroup>
 

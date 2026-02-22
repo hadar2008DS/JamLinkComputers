@@ -46,7 +46,17 @@ namespace JamLinkComputers.UControl
     {
         { "Major", new[] { 0, 2, 4, 5, 7, 9, 11 } },
         { "Natural Minor", new[] { 0, 2, 3, 5, 7, 8, 10 } },
-        // ... other patterns follow the same logic
+        { "Harmonic Minor", new[] { 0, 2, 3, 5, 7, 8, 11 } },
+        { "Melodic Minor", new[] { 0, 2, 3, 5, 7, 9, 11 } },
+        { "Pentatonic Major", new[] { 0, 2, 4, 7, 9 } },
+        { "Pentatonic Minor", new[] { 0, 3, 5, 7, 10 } },
+        { "Ionian", new[] { 0, 2, 4, 5, 7, 9, 11 } },
+        { "Dorian", new[] { 0, 2, 3, 5, 7, 9, 10 } },
+        { "Phrygian", new[] { 0, 1, 3, 5, 7, 8, 10 } },
+        { "Lydian", new[] { 0, 2, 4, 6, 7, 9, 11 } },
+        { "Mixolydian", new[] { 0, 2, 4, 5, 7, 9, 10 } },
+        { "Aeolian", new[] { 0, 2, 3, 5, 7, 8, 10 } },
+        { "Locrian", new[] { 0, 1, 3, 5, 6, 8, 10 } }
     };
 
         public static List<string> CalculateScale(string root, string patternName)
