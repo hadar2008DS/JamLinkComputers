@@ -6,120 +6,92 @@
              xmlns:local="clr-namespace:JamLinkComputers.UControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <UserControl.Resources>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
 
-        <!-- Header -->
-        <Border Background="#6A1B9A" Padding="15">
-            <TextBlock Text="Groups"
-                   Foreground="White"
-                   FontSize="20"
-                   FontWeight="Bold"
-                   VerticalAlignment="Center"/>
-        </Border>
-
-        <!-- Search Bar -->
-        <Border Grid.Row="1"
-            Background="#F3E5F5"
-            Padding="10">
-            <TextBox x:Name="SearchBox"
-                 Height="30"
-                 Width="200"
-                 HorizontalAlignment="Right"
-                 FontSize="14"
-                 VerticalContentAlignment="Center"
-                 TextChanged="SearchBox_TextChanged"
-                 ToolTip="Search groups by name"
-                 Text="Search group..." />
-        </Border>
-
-        <!-- Tabs -->
-        <TabControl Grid.Row="1"
-                Background="Transparent"
-                BorderThickness="0">
-
-            <!-- My Groups -->
-            <TabItem Header="My Groups" Padding="10">
-                <ListBox x:Name="MyGroupsListBox"
-                     BorderThickness="0"
-                     Background="Transparent">
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="White"
-                                Margin="5"
-                                Padding="10"
-                                CornerRadius="8">
-
-                                <StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Center">
-
-                                    <!-- Group Name -->
-                                    <TextBox Text="{Binding Group.GroupName}"
-                                         Width="200"
-                                         Margin="5"/>
-
-                                    <!-- Update -->
-                                    <Button Content="עדכן שם"
-                                        Margin="5"
-                                        Padding="6,4"
-                                        Background="#9C27B0"
-                                        Foreground="White"
-                                        Click="UpdateGroup_Click"/>
-
-                                    <!-- Leave -->
-                                    <Button Content="עזוב קבוצה"
-                                        Margin="5"
-                                        Padding="6,4"
-                                        Background="#E91E63"
-                                        Foreground="White"
-                                        Click="LeaveGroup_Click"/>
-                                </StackPanel>
+            <Style TargetType="TabItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Border x:Name="TabBorder" Padding="15,5" Margin="0,0,2,0" Background="#161B22" BorderBrush="#30363D" BorderThickness="1,1,1,0" CornerRadius="3,3,0,0">
+                                <ContentPresenter ContentSource="Header" TextBlock.Foreground="White" TextBlock.FontWeight="Bold"/>
                             </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="TabBorder" Property="Background" Value="#1DB954"/>
+                                    <Setter TargetName="TabBorder" Property="BorderBrush" Value="#1DB954"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </UserControl.Resources>
 
-                </ListBox>
-            </TabItem>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <!-- Available Groups -->
-            <TabItem Header="Available Groups" Padding="10">
-                <ListBox x:Name="AvailableGroupsListBox"
-                     BorderThickness="0"
-                     Background="Transparent">
+            <Border BorderBrush="#F1C40F" BorderThickness="0,0,0,1" Padding="0,0,0,5" Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="👥" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="GROUPS" Foreground="#F1C40F" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
 
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="White"
-                                Margin="5"
-                                Padding="10"
-                                CornerRadius="8">
+            <Border Grid.Row="1" Background="#0D1117" BorderBrush="#00BBFF" BorderThickness="1" Margin="0,0,0,15">
+                <Grid Height="30">
+                    <TextBlock Text="Search groups..." Foreground="#444" Margin="10,0" VerticalAlignment="Center" IsHitTestVisible="False"
+                           Visibility="{Binding Text.IsEmpty, ElementName=SearchBox, Converter={StaticResource BoolToVis}}"/>
+                    <TextBox x:Name="SearchBox" Background="Transparent" Foreground="White" BorderThickness="0" 
+                         VerticalContentAlignment="Center" Padding="10,0" TextChanged="SearchBox_TextChanged" CaretBrush="White"/>
+                </Grid>
+            </Border>
 
-                                <StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Center">
+            <TabControl Grid.Row="2" Background="Transparent" BorderThickness="0">
+                <TabItem Header="MY GROUPS">
+                    <ListBox x:Name="MyGroupsListBox" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#0D1117" BorderBrush="#8E44AD" BorderThickness="1" Margin="0,0,0,5" Padding="10" CornerRadius="4">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Text="{Binding Group.GroupName}" Foreground="#F1C40F" FontWeight="Bold" Background="Transparent" BorderThickness="0" FontSize="14"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                            <Button Content="Update" Click="UpdateGroup_Click" Width="70" Height="25" Background="#34495E" Foreground="White" BorderThickness="0"/>
+                                        <Button Content="Leave" Click="LeaveGroup_Click" Width="70" Height="25" Background="#C0392B" Foreground="White" BorderThickness="0"/>
+                                    </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </TabItem>
 
-                                    <!-- Group Name -->
-                                    <TextBlock Text="{Binding GroupName}"
-                                           Width="200"
-                                           VerticalAlignment="Center"/>
-
-                                    <!-- Join -->
-                                    <Button Content="הצטרף"
-                                        Padding="10,5"
-                                        Background="#6A1B9A"
-                                        Foreground="White"
-                                        Click="JoinGroup_Click"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-
-                </ListBox>
-            </TabItem>
-        </TabControl>
-    </Grid>
-</UserControl>
+                <TabItem Header="AVAILABLE TO JOIN">
+                    <ListBox x:Name="AvailableGroupsListBox" Background="Transparent" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#0D1117" BorderBrush="#00BBFF" BorderThickness="1"  Padding="10" CornerRadius="4">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding GroupName}" Foreground="White" VerticalAlignment="Center" FontSize="14"/>
+                                        <Button Grid.Column="1" Content="Join" Click="JoinGroup_Click" Width="80" Height="25" Background="#1DB954" Foreground="White" BorderThickness="0" FontWeight="Bold"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </UserControl>

@@ -3,6 +3,7 @@ using HadarJamLink;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,36 +31,61 @@ namespace JamLinkComputers.UControl
         {
             currentUser = user;
             InitializeComponent();
-            Loaded += ProducerV_Loaded;
+            //Loaded += ProducerV_Loaded;
         }
-        private async void ProducerV_Loaded(object s, RoutedEventArgs e) => await LoadData();
 
-        public async Task<List<MusicalSegments>> GetMusicalSegments(int musicianId)
+        // Logic to launch apps based on the button "Tag"
+        private void LaunchApp_Click(object sender, RoutedEventArgs e)
         {
-            var allSegments = await apiService.GetMusicalSegments(); // Use apiService to fetch segments
-            return allSegments;
-        }
-        //public async Task<List<App>> GetProducerApps(int producerId)
-        //{
-        //    var allApps = await apiService.GetProducerApps(); // Use apiService to fetch apps
-        //    return allApps;
-        //}
+            var btn = (System.Windows.Controls.Button)sender;
+            string app = btn.Tag?.ToString();
 
-        private async Task LoadData()
+            if (string.IsNullOrEmpty(app)) return;
+
+            try
+            {
+                Process.Start(new ProcessStartInfo(app) { UseShellExecute = true });
+            }
+            catch
+            {
+                MessageBox.Show($"Could not find {app}. Point the 'Tag' to the full .exe path on your PC.");
+            }
+        }
+
+        private void LaunchUrl_Click(object sender, RoutedEventArgs e)
         {
-            if (currentUser == null)
-                return;
-
-/*            AppsList apps = await apiService.GetProducerApps();*/
-            MusicalSegmentsList segments = await apiService.GetMusicalSegments();
-
-            //AppsList.ItemsSource = apps;
-            MusicalSegments.ItemsSource = segments;
+            var btn = (System.Windows.Controls.Button)sender;
+            string url = btn.Tag.ToString();
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
+        //        private async void ProducerV_Loaded(object s, RoutedEventArgs e) => await LoadData();
 
-        private void CreateProject_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Project creation screen will be added later.");
-        }
+        //        public async Task<List<MusicalSegments>> GetMusicalSegments(int musicianId)
+        //        {
+        //            var allSegments = await apiService.GetMusicalSegments(); // Use apiService to fetch segments
+        //            return allSegments;
+        //        }
+        //        //public async Task<List<App>> GetProducerApps(int producerId)
+        //        //{
+        //        //    var allApps = await apiService.GetProducerApps(); // Use apiService to fetch apps
+        //        //    return allApps;
+        //        //}
+
+        //        private async Task LoadData()
+        //        {
+        //            if (currentUser == null)
+        //                return;
+
+        ///*            AppsList apps = await apiService.GetProducerApps();*/
+        //            MusicalSegmentsList segments = await apiService.GetMusicalSegments();
+
+        //            //AppsList.ItemsSource = apps;
+        //            MusicalSegments.ItemsSource = segments;
+        //        }
+
+        //        private void CreateProject_Click(object sender, RoutedEventArgs e)
+        //        {
+        //            MessageBox.Show("Project creation screen will be added later.");
+        //        }
     }
 }
