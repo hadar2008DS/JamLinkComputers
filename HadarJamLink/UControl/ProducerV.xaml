@@ -61,7 +61,7 @@
         </StackPanel>
 
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden">
-            <WrapPanel>
+            <WrapPanel x:Name="SegmentsPanel">
 
                 <Border Style="{StaticResource SegmentModule}" Width="380">
                     <StackPanel >
@@ -77,7 +77,7 @@
 
                 <Border Style="{StaticResource SegmentModule}" Width="780">
                     <StackPanel >
-                        <TextBlock Text="THE TERMINAL [DISTRO]" Foreground="MediumPurple" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="THE TERMINAL [DISTRO]" Foreground="MediumPurple" FontWeight="Bold" />
                         <UniformGrid Columns="3">
                             <Button Content="YouTube Studio" Style="{StaticResource AppLaunchButton}"  Tag="https://studio.youtube.com" Click="LaunchUrl_Click"/>
                             <Button Content="TikTok Center" Style="{StaticResource AppLaunchButton}" Tag="https://tiktok.com" Click="LaunchUrl_Click"/>

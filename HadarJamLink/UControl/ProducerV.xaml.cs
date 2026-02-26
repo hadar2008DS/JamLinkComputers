@@ -26,12 +26,36 @@ namespace JamLinkComputers.UControl
     {
         private Person currentUser;
         private ApiService apiService = new ApiService();
+        
 
         public ProducerV(Person user)
         {
             currentUser = user;
             InitializeComponent();
-            //Loaded += ProducerV_Loaded;
+            
+            Loaded += ProducerV_Loaded;
+        }
+        private async void ProducerV_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadSegments();
+        }
+        private async Task LoadSegments()
+        {
+            if (currentUser == null)
+                return;
+
+            try
+            {
+                var allSegments = await apiService.GetMusicalSegments();
+
+                var producerSegments = allSegments.Where(s => s.Musician != null && s.Musician.Id == currentUser.Id).ToList();
+
+                GenerateSegmentModules(producerSegments);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading segments: " + ex.Message);
+            }
         }
 
         // Logic to launch apps based on the button "Tag"
@@ -57,6 +81,43 @@ namespace JamLinkComputers.UControl
             var btn = (System.Windows.Controls.Button)sender;
             string url = btn.Tag.ToString();
             Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
+
+        private void GenerateSegmentModules(List<MusicalSegments> segments)
+        {
+            //SegmentsPanel.Children.Clear();
+
+            for (int i = 0; i < segments.Count; i++)
+            {
+                var segment = segments[i];
+
+                Border border = new Border();
+                border.Style = (Style)FindResource("SegmentModule");
+                border.Width = 380;
+
+                StackPanel stack = new StackPanel();
+
+                TextBlock title = new TextBlock();
+                title.Text = segment.SegmentName.ToUpper();
+                title.Foreground = Brushes.Cyan;
+                title.FontWeight = FontWeights.Bold;
+
+                TextBlock genre = new TextBlock();
+                genre.Text = "Genre: " + segment.Genre;
+                genre.Foreground = Brushes.Gray;
+
+                TextBlock duration = new TextBlock();
+                duration.Text = "Duration: " + segment.Lengthinseconds;
+                duration.Foreground = Brushes.Gray;
+
+                stack.Children.Add(title);
+                stack.Children.Add(genre);
+                stack.Children.Add(duration);
+
+                border.Child = stack;
+
+                SegmentsPanel.Children.Add(border);
+            }
         }
         //        private async void ProducerV_Loaded(object s, RoutedEventArgs e) => await LoadData();
 
