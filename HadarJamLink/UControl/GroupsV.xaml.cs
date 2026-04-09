@@ -1,4 +1,5 @@
 ﻿using ClientSide;
+using JamLinkComputers.Pages;
 using Melanchall.DryWetMidi.Tools;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.VisualBasic.Logging;
@@ -10,7 +11,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Xml.Linq;
+
 
 namespace JamLinkComputers.UControl
 {
@@ -166,6 +170,35 @@ namespace JamLinkComputers.UControl
                 }
             }
         }
+
+        private void GroupName_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+            int groupId = -1;
+
+            // שליפת ה-ID לפי סוג המודל (חבר קבוצה או קבוצה כללית)
+            if (element.DataContext is GroupMembers gm && gm.Group != null)
+                groupId = gm.Group.Id;
+            else if (element.DataContext is Model.Group g)
+                groupId = g.Id;
+
+            if (groupId != -1)
+            {
+                // מציאת ה-Frame וניווט לדף החדש
+                var navService = NavigationService.GetNavigationService(this);
+                if (navService != null)
+                    navService.Navigate(new Pages.GroupDetailsPage(groupId));
+            }
+        }
+        //private void ViewDetails_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // נניח שהכפתור נמצא בתוך רשימה וה-DataContext שלו הוא הקבוצה
+        //    var button = sender as Button;
+        //    var group = button.DataContext as Group;
+
+        //    // ניווט בתוך ה-Frame
+        //    NavigationService.Navigate(new GroupDetailsPage(group.Id));
+        //}
 
 
     }
