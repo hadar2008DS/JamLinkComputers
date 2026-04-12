@@ -30,7 +30,7 @@ namespace JamLinkComputers.Pages
         public static List<Model.Producer> allProducers = new List<Model.Producer>();
         public static List<Model.Instruments> allInstruments = new List<Model.Instruments>();
         public static List<Model.MusicianInstruments> MusicianInstrumentLinks = new List<Model.MusicianInstruments>();
-        private int groupId; // assuming this is where you store the current group ID
+        private int groupId; // assuming this is where the current group ID is stored 
         private ApiService apiService = new ApiService();
         public GroupDetailsPage(int groupId)
         {

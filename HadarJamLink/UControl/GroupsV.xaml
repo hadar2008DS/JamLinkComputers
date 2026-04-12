@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:JamLinkComputers.UControl"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#3C205E">
     <UserControl.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
 
@@ -18,8 +18,8 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="TabBorder" Property="Background" Value="#1DB954"/>
-                                    <Setter TargetName="TabBorder" Property="BorderBrush" Value="#1DB954"/>
+                                    <Setter TargetName="TabBorder" Property="Background" Value="DarkSlateBlue"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="DarkSlateBlue"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -56,7 +56,7 @@
                     <ListBox x:Name="MyGroupsListBox" Background="Transparent" BorderThickness="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="#0D1117" BorderBrush="#8E44AD" BorderThickness="1" Padding="10" CornerRadius="4">
+                            <Border Background="#0D1117" BorderBrush="#3C205E" BorderThickness="1" Padding="10" CornerRadius="4">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -68,8 +68,8 @@
                                        FontSize="14" 
                                        Cursor="Hand"
                                        VerticalAlignment="Center"
-           MouseLeftButtonUp="GroupName_MouseLeftButtonUp" 
-           TextDecorations="Underline"/>
+                                       MouseLeftButtonUp="GroupName_MouseLeftButtonUp" 
+                                       TextDecorations="Underline"/>
                                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                                             <Button Content="Update" Click="UpdateGroup_Click" Width="70" Height="25" Background="#34495E" Foreground="White" BorderThickness="0"/>
                                         <Button Content="Leave" Click="LeaveGroup_Click" Width="70" Height="25" Background="#C0392B" Foreground="White" BorderThickness="0"/>
@@ -92,7 +92,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding GroupName}" Foreground="White" VerticalAlignment="Center" FontSize="14"/>
-                                        <Button Grid.Column="1" Content="Join" Click="JoinGroup_Click" Width="80" Height="25" Background="Purple" Foreground="White" BorderThickness="0" FontWeight="Bold"/>
+                                    <Button Grid.Column="1" Content="Join" Click="JoinGroup_Click" Width="80" Height="25" Background="#F1C40F" Foreground="White" BorderThickness="0" FontWeight="Bold"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

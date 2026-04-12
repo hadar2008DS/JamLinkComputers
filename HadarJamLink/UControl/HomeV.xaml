@@ -16,7 +16,7 @@
             <StackPanel x:Name="ActivityFeedPanel" Orientation="Horizontal" VerticalAlignment="Center"/>
         </ScrollViewer>
 
-        <Grid Grid.Row="1" Background="White" >
+        <Grid Grid.Row="1" Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
@@ -26,23 +26,21 @@
                 <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Padding="10,5">
                     <TextBlock x:Name="StatsLabel" Text="Your Stats" FontFamily="{StaticResource OswaldFont}" FontSize="16"/>
                 </Border>
-                <Canvas x:Name="StatsCanvas" Height="250" >
+                <Canvas x:Name="StatsCanvas" Height="250">
                     <Path x:Name="GraphPath" Stroke="#6A309D" StrokeThickness="3"/>
+
+                    <Button x:Name="ExploreButton" Content="Explore Musicians 🔍" 
+                        Canvas.Right="20" Canvas.Top="-35"
+                        Padding="10,5" Background="#6A309D" Foreground="White" 
+                        FontWeight="Bold" Cursor="Hand" Click="ExploreButton_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </Canvas>
             </StackPanel>
-
-            <!--<Button x:Name="ActionButton" Grid.Column="1" Width="180" Height="180" 
-                    Background="#FFC107" Foreground="White" Click="ActionButton_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Ellipse Fill="{TemplateBinding Background}"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-                <TextBlock x:Name="ActionText" Text="NEW" FontWeight="Bold" FontSize="20"/>
-            </Button>-->
         </Grid>
     </Grid>
 </UserControl>

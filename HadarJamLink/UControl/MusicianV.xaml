@@ -6,121 +6,115 @@
              xmlns:local="clr-namespace:JamLinkComputers.UControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#1A1A2E">
-        <ScrollViewer>
-            <StackPanel>
+    <Grid Background="#0A192F">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="25">
 
-                <!-- 🎸 Instruments -->
-                <TextBlock Text="🎸 Manage Instruments"
-                       Foreground="#FFD700"
-                       FontSize="20"
-                       FontWeight="Bold"/>
+                <Border Background="#112240" CornerRadius="20" Padding="20" Margin="0,0,0,25">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Opacity="0.3" ShadowDepth="2"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="🎸 My Instruments" Foreground="#F1C40F" FontSize="22" FontWeight="Bold" Margin="0,0,0,15"/>
 
-                <StackPanel Orientation="Horizontal" >
-                    <ComboBox x:Name="AllInstrumentsCombo"
-                          Width="200"
-                          DisplayMemberPath="InstrumentName"
-                          Background="White"/>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="AllInstrumentsCombo" Height="40" Background="#1D2D50" Foreground="White" 
+                                      DisplayMemberPath="InstrumentName" BorderThickness="1" BorderBrush="#30363D"/>
+                            <Button Grid.Column="1" Content="Add New" Click="AddInstrument_Click" Width="100" Margin="10,0,0,0"
+                                    Background="#F1C40F" Foreground="#0A192F" FontWeight="Bold">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
 
-                    <Button Content="Add"
-                        Click="AddInstrument_Click"
-                        
-                        Width="80"/>
-                </StackPanel>
-
-                <ListBox x:Name="InstrumentsListBox"
-                     Height="120"
-                     Background="#16213E"
-                     BorderBrush="#FFD700">
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <DockPanel>
-
-                                <Button Content="🗑"
-                                    Width="40"
-                                    Click="DeleteInstrument_Click"
-                                    DockPanel.Dock="Right"/>
-
-                                <TextBlock Text="{Binding Instruments.InstrumentName}"
-                                       Foreground="White"
-                                       VerticalAlignment="Center"/>
-                            </DockPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-
-                <!-- 🎵 Genres -->
-                <TextBlock Text="🎵 Genres"
-                       Foreground="#00D2FF"
-                       FontSize="20"
-                       FontWeight="Bold"
-                       />
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="NewGenreTextBox"
-                         Width="200"
-                         Background="White"/>
-
-                    <Button Content="Add Genre"
-                        Click="AddGenre_Click"
-                       
-                        Width="100"/>
-                </StackPanel>
-
-                <ListBox x:Name="GenresListBox"
-                     Height="100"
-                     Background="#16213E"
-                     BorderBrush="#00D2FF"
-                     />
-
-                <!-- 💻 Segments -->
-                <TextBlock Text="💻 Segments"
-                       Foreground="MediumPurple"
-                       FontSize="20"
-                       FontWeight="Bold"
-                       />
-
-                <DataGrid x:Name="SegmentsGrid"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      Background="#16213E"
-                      Foreground="White">
-
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name"
-                            Binding="{Binding SegmentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        
-                        <DataGridTextColumn Header="Length"
-                         Binding="{Binding LengthInSeconds, Mode=TwoWay}" />
-
-                        <DataGridTextColumn Header="BPM"
-                            Binding="{Binding Bpm, Mode=TwoWay}" />
-
-                        <DataGridTextColumn Header="Key"
-                            Binding="{Binding Key, Mode=TwoWay}" />
-
-                        <DataGridTextColumn Header="Mood"
-                        Binding="{Binding Mood, Mode=TwoWay}" />
-
-                        <DataGridTextColumn Header="Genre"
-                            Binding="{Binding Genre, Mode=TwoWay}" />
-
-                        <DataGridTextColumn Header="Link"
-                        Binding="{Binding Link, Mode=TwoWay}" />
-
-                        <DataGridTemplateColumn Header="Save">
-                            <DataGridTemplateColumn.CellTemplate>
+                        <ItemsControl x:Name="InstrumentsListBox">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Content="💾"
-                                        Click="UpdateSegment_Click"
-                                        Width="40"/>
+                                    <Border Background="#1D2D50" CornerRadius="12" Padding="12,6" Margin="0,0,10,10" BorderBrush="#00BBFF" BorderThickness="1">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Instruments.InstrumentName, TargetNullValue='(No Instrument)', FallbackValue='...'}" 
+                               Foreground="White" VerticalAlignment="Center" FontWeight="Medium"/>
+                                            <Button Content="×" Click="DeleteInstrument_Click" Background="Transparent" Foreground="#FF4B2B" 
+                            BorderThickness="0" FontSize="16" Margin="8,0,0,0" Cursor="Hand"/>
+                                        </StackPanel>
+                                    </Border>
                                 </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
 
+                <Border Background="#112240" CornerRadius="20" Padding="20" Margin="0,0,0,25">
+                    <StackPanel>
+                        <TextBlock Text="🎵 Genres Inspiration" Foreground="#00D2FF" FontSize="22" FontWeight="Bold" Margin="0,0,0,15"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <TextBox x:Name="NewGenreTextBox" Width="250" Height="35" Background="#1D2D50" Foreground="White" 
+                                     BorderBrush="#30363D" Padding="10,5" VerticalContentAlignment="Center"/>
+                            <Button Content="+ Add Genre" Click="AddGenre_Click" Width="120" Margin="10,0,0,0" Background="#00D2FF" Foreground="White" FontWeight="Bold"/>
+                        </StackPanel>
+                        <ItemsControl x:Name="GenresListBox">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#0A192F" CornerRadius="15" Padding="15,5" Margin="5" BorderBrush="#8892B0" BorderThickness="0.5">
+                                        <TextBlock Text="{Binding}" Foreground="#8892B0" FontSize="13" FontStyle="Italic"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Text="💻 Musical Segments" Foreground="#A29BFE" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"/>
+                <Border Background="#112240" CornerRadius="15" Padding="10">
+                    <DataGrid x:Name="SegmentsGrid" AutoGenerateColumns="False" CanUserAddRows="False" Background="Transparent" 
+                              BorderThickness="0" Foreground="White" RowBackground="Transparent" GridLinesVisibility="None"
+                              HeadersVisibility="Column" RowHeight="45">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="#8892B0"/>
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="NAME" Width="*" Binding="{Binding SegmentName, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="BPM" Width="60" Binding="{Binding Bpm}"/>
+                            <DataGridTextColumn Header="KEY" Width="60" Binding="{Binding Key}"/>
+                            <DataGridTextColumn Header="GENRE" Width="100" Binding="{Binding Genre}"/>
+                            <DataGridTemplateColumn Header="ACTION" Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="💾 Save" Click="UpdateSegment_Click" Background="#27AE60" Foreground="White" Padding="8,2" FontSize="11" FontWeight="Bold">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
             </StackPanel>
         </ScrollViewer>
     </Grid>

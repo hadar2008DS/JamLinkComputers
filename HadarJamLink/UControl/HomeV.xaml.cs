@@ -176,6 +176,24 @@ namespace JamLinkComputers.UControl
             MessageBox.Show($"Ready to collaborate, {loggedInUser.Username}?");
         }
 
+        private void ExploreButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 1. השגת ה-MainWindow בצורה מפורשת (Casting)
+                var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
+
+                if (mainWindow != null)
+                {
+                    // 2. שימוש ב-MainFrame (השם מה-XAML שלך) ובפעולת Navigate
+                    mainWindow.MainFrame.Navigate(new ExploreV());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Navigation Error: " + ex.Message);
+            }
+        }
 
         //private void CreateLegend(List<LegendItem> items)
         //{
