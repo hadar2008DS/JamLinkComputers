@@ -186,7 +186,7 @@ namespace JamLinkComputers.UControl
                 if (mainWindow != null)
                 {
                     // 2. שימוש ב-MainFrame (השם מה-XAML שלך) ובפעולת Navigate
-                    mainWindow.MainFrame.Navigate(new ExploreV());
+                    mainWindow.MainFrame.Navigate(new ExploreV(this.loggedInUser));
                 }
             }
             catch (Exception ex)

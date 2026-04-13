@@ -22,25 +22,31 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Padding="10,5">
-                    <TextBlock x:Name="StatsLabel" Text="Your Stats" FontFamily="{StaticResource OswaldFont}" FontSize="16"/>
-                </Border>
-                <Canvas x:Name="StatsCanvas" Height="250">
-                    <Path x:Name="GraphPath" Stroke="#6A309D" StrokeThickness="3"/>
+            <Grid Grid.Column="0" Margin="10">
+                <StackPanel>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Padding="10,5" Margin="0,0,0,10">
+                        <TextBlock x:Name="StatsLabel" Text="Your Stats" FontFamily="{StaticResource OswaldFont}" FontSize="16"/>
+                    </Border>
 
-                    <Button x:Name="ExploreButton" Content="Explore Musicians 🔍" 
-                        Canvas.Right="20" Canvas.Top="-35"
-                        Padding="10,5" Background="#6A309D" Foreground="White" 
-                        FontWeight="Bold" Cursor="Hand" Click="ExploreButton_Click">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="15"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                </Canvas>
-            </StackPanel>
+                    <Grid>
+                        <Canvas x:Name="StatsCanvas" Height="250">
+                            <Path x:Name="GraphPath" Stroke="#6A309D" StrokeThickness="3"/>
+                        </Canvas>
+
+                        <Button x:Name="ExploreButton" Content="Explore Musicians 🔍" 
+                            HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Margin="0,-45,20,0"
+                            Padding="10,5" Background="#6A309D" Foreground="White" 
+                            FontWeight="Bold" Cursor="Hand" Click="ExploreButton_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="15"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

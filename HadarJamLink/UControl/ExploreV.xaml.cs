@@ -25,21 +25,69 @@ namespace JamLinkComputers.UControl
     {
         private ApiService apiService = new ApiService();
         private List<Person> allUsers = new();
-        public ExploreV()
+        private Person currentUser;
+        private HashSet<int> producerIds = new();
+        private HashSet<int> musicianIds = new();
+        public ExploreV(Person loggedInUser)
         {
             InitializeComponent();
+            this.currentUser = loggedInUser;
+            // now controls are assigned
+            AllFilter.IsChecked = true; // will fire FilterUsers now that all fields exist
             LoadUsers();
         }
 
         private async void LoadUsers()
         {
-            // Fetch all registered users
-            var users = await apiService.GetPerson();
-            if (users != null)
+            try
             {
-                allUsers = users;
-                UsersCardsList.ItemsSource = allUsers;
+                // 1. שליפת כל הנתונים הדרושים לסיווג
+                var users = await apiService.GetPerson();
+                var apps = await apiService.GetProducerApps();
+                var segments = await apiService.GetMusicalSegments();
+
+                if (users != null)
+                {
+                    allUsers = users;
+
+                    // 2. סיווג מפיקים: כל מי שיש לו אפליקציה ברשימת ה-Apps
+                    producerIds = new HashSet<int>(apps.Select(a => a.Producer.Id));
+
+                    // 3. סיווג מוזיקאים: כל מי שיש לו סגמנט מוזיקלי
+                    musicianIds = new HashSet<int>(segments.Select(s => s.Musician.Id));
+
+                    UsersCardsList.ItemsSource = allUsers;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error classifying users: " + ex.Message);
+            }
+        }
+
+        private void FilterUsers(object sender, EventArgs e)
+        {
+            // בדיקה שכל האלמנטים שנוצרו ב-XAML כבר קיימים בזיכרון
+            // הוספנו כאן בדיקה ל-MusicianFilter ו-ProducerFilter
+            if (allUsers == null || SearchBox == null || MusicianFilter == null || ProducerFilter == null)
+                return;
+
+            string query = SearchBox.Text.ToLower();
+
+            // סינון ראשוני לפי שם
+            var filtered = allUsers.Where(u => u.Username.ToLower().Contains(query));
+
+            // סינון לפי הסיווג
+            if (MusicianFilter.IsChecked == true)
+            {
+                filtered = filtered.Where(u => musicianIds.Contains(u.Id));
+            }
+            else if (ProducerFilter.IsChecked == true)
+            {
+                filtered = filtered.Where(u => producerIds.Contains(u.Id));
+            }
+
+            UsersCardsList.ItemsSource = filtered.ToList();
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -61,17 +109,25 @@ namespace JamLinkComputers.UControl
                 if (mainWindow != null)
                 {
                     // 3. ניווט באמצעות ה-Frame
-                    mainWindow.MainFrame.Navigate(new PublicProfileV(selectedUser));
+                    mainWindow.MainFrame.Navigate(new PublicProfileV(selectedUser, this.currentUser));
                 }
             }
         }
 
-    //    private void SwitchToProfile(Person user)
-    //{
-    //    // This is a common way to find the main window and change its content
-    //    var mainWindow = System.Windows.Application.Current.MainWindow as dynamic; 
-    //    mainWindow.MainContentArea.Children.Clear();
-    //    mainWindow.MainContentArea.Children.Add(new PublicProfileV(user));
-    //}
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
+            if (mainWindow != null)
+            {
+                // ניווט מפורש לדף הבית עם המשתמש המחובר
+                mainWindow.MainFrame.Navigate(new HomeV(this.currentUser));
+
+                // בונוס: ניקוי ההיסטוריה כדי שלא יהיה אפשר לחזור בטעות ל-Explore בלופ
+                while (mainWindow.MainFrame.CanGoBack)
+                {
+                    mainWindow.MainFrame.RemoveBackEntry();
+                }
+            }
+        }
     }
 }

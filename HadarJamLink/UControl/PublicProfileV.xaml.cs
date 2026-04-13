@@ -27,10 +27,12 @@ namespace JamLinkComputers.UControl
     {
         private ApiService apiService = new ApiService();
         private Person targetUser;
-        public PublicProfileV(Person userToShow)
+        private Person loggedInUser;
+        public PublicProfileV(Person userToShow, Person loggedInUser)
         {
             InitializeComponent();
             targetUser = userToShow;
+            this.loggedInUser = loggedInUser;
             LoadUserData();
         }
 
@@ -77,7 +79,7 @@ namespace JamLinkComputers.UControl
             if (mainWindow != null)
             {
                 // שימוש ב-Navigate במקום ב-Children.Add
-                mainWindow.MainFrame.Navigate(new ExploreV());
+                mainWindow.MainFrame.Navigate(new ExploreV(this.loggedInUser));
             }
         }
     }
