@@ -22,12 +22,36 @@
             <Border.Effect>
                 <DropShadowEffect BlurRadius="20" Opacity="0.4" ShadowDepth="4"/>
             </Border.Effect>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="←" Click="Back_Click" Background="Transparent" Foreground="#F1C40F" 
-                    BorderThickness="0" FontSize="26" Cursor="Hand" Margin="0,0,20,0" VerticalAlignment="Center"/>
-                <TextBlock x:Name="GroupNameTitle" Text="LOADING..." Foreground="#F1C40F" 
-                       FontSize="28" FontWeight="Bold" VerticalAlignment="Center"/>
-            </StackPanel>
+
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Content="←" Click="Back_Click" Background="Transparent" Foreground="#F1C40F" 
+                            BorderThickness="0" FontSize="26" Cursor="Hand" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="GroupNameTitle" Text="LOADING..." Foreground="#F1C40F" 
+                               FontSize="28" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <Button Content="Project Workspace" 
+                        Click="ProjectWorkspace_Click"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Padding="18,10"
+                        Background="#F1C40F" 
+                        Foreground="#0A192F"
+                        FontWeight="ExtraBold"
+                        FontSize="14"
+                        Cursor="Hand"
+                        BorderThickness="0">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" Opacity="0.2" ShadowDepth="2"/>
+                    </Button.Effect>
+                </Button>
+            </Grid>
         </Border>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
@@ -35,7 +59,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Background="#172A45" CornerRadius="15" Padding="18" Margin="0,0,0,15" 
-            BorderBrush="#30363D" BorderThickness="1">
+                                BorderBrush="#30363D" BorderThickness="1">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="12" ShadowDepth="3" Opacity="0.3" Color="Black"/>
                             </Border.Effect>
@@ -49,16 +73,16 @@
 
                                 <Border Width="50" Height="50" Background="#6C5CE7" CornerRadius="25">
                                     <TextBlock Text="{Binding Username[0]}" Foreground="White" 
-                           FontSize="22" FontWeight="Bold" 
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                               FontSize="22" FontWeight="Bold" 
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0">
                                     <TextBlock Text="{Binding Username}" Foreground="White" 
-                           FontSize="19" FontWeight="SemiBold"/>
+                                               FontSize="19" FontWeight="SemiBold"/>
 
                                     <TextBlock Text="{Binding Id, Converter={StaticResource RoleConverter}}" 
-                           FontSize="13" Foreground="#8892B0" FontWeight="Medium"/>
+                                               FontSize="13" Foreground="#8892B0" FontWeight="Medium"/>
                                 </StackPanel>
 
                                 <Border Grid.Column="2" Padding="14,7" CornerRadius="10" VerticalAlignment="Center" BorderThickness="1.5">
@@ -67,13 +91,13 @@
                                             <Setter Property="Background" Value="#112240"/>
                                             <Setter Property="BorderBrush" Value="#8892B0"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Id, Converter={StaticResource RoleConverter}}" Value="Musician">
+                                                <DataTrigger Binding="{Binding Id, Converter={StaticResource RoleConverter}, ConverterParameter='simple'}" Value="Musician">
                                                     <Setter Property="BorderBrush" Value="#00BBFF"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Id, Converter={StaticResource RoleConverter}}" Value="Producer">
+                                                <DataTrigger Binding="{Binding Id, Converter={StaticResource RoleConverter}, ConverterParameter='simple'}" Value="Producer">
                                                     <Setter Property="BorderBrush" Value="#F1C40F"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Id, Converter={StaticResource RoleConverter}}" Value="Musician &amp; Producer">
+                                                <DataTrigger Binding="{Binding Id, Converter={StaticResource RoleConverter}, ConverterParameter='simple'}" Value="Musician &amp; Producer">
                                                     <Setter Property="BorderBrush" Value="#A29BFE"/>
                                                 </DataTrigger>
                                             </Style.Triggers>

@@ -125,6 +125,19 @@ namespace JamLinkComputers.Pages
             }
         }
 
+        private void ProjectWorkspace_Click(object sender, RoutedEventArgs e)
+        {
+            // מעבר לעמוד מרכז הפרויקטים
+            // כאן אנחנו מעבירים את ה-ID של הקבוצה הנוכחית
+            //var workspacePage = new GroupProjectWorkspaceV(this.groupId);
+
+            var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
+            if (mainWindow?.MainFrame.Content is UserHomePage homePage)
+            {
+                //homePage.LoadView(workspacePage);
+            }
+        }
+
     }
 
 
