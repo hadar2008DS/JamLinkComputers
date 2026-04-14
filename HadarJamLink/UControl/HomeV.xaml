@@ -33,7 +33,7 @@
                             <Path x:Name="GraphPath" Stroke="#6A309D" StrokeThickness="3"/>
                         </Canvas>
 
-                        <Button x:Name="ExploreButton" Content="Explore Musicians 🔍" 
+                        <Button x:Name="ExploreButton" Content="Explore Partners 🔍" 
                             HorizontalAlignment="Right" VerticalAlignment="Top"
                             Margin="0,-45,20,0"
                             Padding="10,5" Background="#6A309D" Foreground="White" 

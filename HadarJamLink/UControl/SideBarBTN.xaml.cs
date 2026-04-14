@@ -100,6 +100,11 @@ namespace JamLinkComputers.UControl
             MenuClicked?.Invoke("Producer");
         }
 
+        private void Explore_Click(object sender, RoutedEventArgs e)
+        {
+            MenuClicked?.Invoke("Explore");
+        }
+
         private void SideBar_MouseEnter(object sender, MouseEventArgs e)
         {
             if (!isSidebarOpen)
@@ -135,6 +140,8 @@ namespace JamLinkComputers.UControl
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
             });
         }
+
+        
 
 
         //private void FadeText(double opacity)

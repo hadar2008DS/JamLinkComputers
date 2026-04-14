@@ -117,17 +117,20 @@ namespace JamLinkComputers.UControl
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
-            if (mainWindow != null)
-            {
-                // ניווט מפורש לדף הבית עם המשתמש המחובר
-                mainWindow.MainFrame.Navigate(new HomeV(this.currentUser));
+            //if (mainWindow != null)
+            //{
+            //    // ניווט מפורש לדף הבית עם המשתמש המחובר
+            //    mainWindow.MainFrame.Navigate(new HomeV(this.currentUser));
 
-                // בונוס: ניקוי ההיסטוריה כדי שלא יהיה אפשר לחזור בטעות ל-Explore בלופ
-                while (mainWindow.MainFrame.CanGoBack)
-                {
-                    mainWindow.MainFrame.RemoveBackEntry();
-                }
-            }
+            //    // בונוס: ניקוי ההיסטוריה כדי שלא יהיה אפשר לחזור בטעות ל-Explore בלופ
+            //    while (mainWindow.MainFrame.CanGoBack)
+            //    {
+            //        mainWindow.MainFrame.RemoveBackEntry();
+            //    }
+            //}
+
+            mainWindow.MainFrame.Navigate(new UserHomePage(this.currentUser));
+
         }
     }
 }

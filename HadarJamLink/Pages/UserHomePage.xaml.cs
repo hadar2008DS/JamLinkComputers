@@ -23,6 +23,7 @@ namespace JamLinkComputers
         private TunerControl TunerInstance;
         private ChordsControl ChordsInstance;
         private ScalesControl ScalesInstance;
+        private ExploreV ExploreInstance;
 
 
 
@@ -218,6 +219,12 @@ namespace JamLinkComputers
             LoadView(new HomeV(currentUser));
         }
 
+        public void NavigateToHome()
+        {
+            // משתמש בפונקציית ה-LoadView שכבר קיימת אצלך
+            LoadView(new HomeV(currentUser));
+        }
+
         // ================= ROLE LOGIC =================
 
         private async Task LoadUserRole()
@@ -242,7 +249,7 @@ namespace JamLinkComputers
 
         // ================= NAVIGATION =================
 
-        private void SideBar_MenuClicked(string menu)
+        public void SideBar_MenuClicked(string menu)
         {
             switch (menu)
             {
@@ -265,12 +272,16 @@ namespace JamLinkComputers
                 case "Producer":
                     LoadView(new ProducerV(currentUser));
                     break;
+                case "Explore":
+                    // שימי לב שאנחנו קוראים לפונקציה שיוצרת/מחזירה את האקספלור
+                    MainContent.Content = CreateExploreView();
+                    break;
             }
         }
 
         // ================= VIEW LOADER =================
 
-        private void LoadView(UserControl view)
+        public void LoadView(UserControl view)
         {
             MainContent.Content = view;
         }
@@ -312,6 +323,13 @@ namespace JamLinkComputers
             
             return metronomeInstance;
         }
+        private UIElement CreateExploreView()
+        {
+            if (ExploreInstance == null)
+                ExploreInstance = new ExploreV(currentUser);
+
+            return ExploreInstance;
+        }
         private void Tuner_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = CreateTunerView();
@@ -330,6 +348,11 @@ namespace JamLinkComputers
         private void Metronome_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = CreateMetronomeView();
+        }
+
+        private void Explore_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = CreateExploreView();
         }
 
         private void Tips_Click(object sender, RoutedEventArgs e)

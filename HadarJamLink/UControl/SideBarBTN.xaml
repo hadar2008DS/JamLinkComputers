@@ -58,6 +58,10 @@
                     Visibility="Collapsed"
                     Click="Producer_Click"/>
 
+                <Button Style="{StaticResource SideBarButton}"
+                Content="Explore"
+                Click="Explore_Click"/>
+
             </StackPanel>
         </Border>
     </Grid>
