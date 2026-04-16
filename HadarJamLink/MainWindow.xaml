@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HadarJamLink"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid  Background="White">
+    <Grid  Background="#112240">
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"
         Source="Pages/LogInPage.xaml"
         />

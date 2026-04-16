@@ -12,23 +12,33 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Background="White">
-            <StackPanel x:Name="ActivityFeedPanel" Orientation="Horizontal" VerticalAlignment="Center"/>
+        <ScrollViewer Grid.Row="0" 
+              Style="{StaticResource ModernScrollViewer}" 
+              HorizontalScrollBarVisibility="Auto" 
+              VerticalScrollBarVisibility="Disabled" 
+              Background="#112240">
+
+            <StackPanel x:Name="ActivityFeedPanel" 
+                Orientation="Horizontal" 
+                VerticalAlignment="Center" 
+                Margin="10,5"/>
         </ScrollViewer>
 
-        <Grid Grid.Row="1" Background="White">
+        <Grid Grid.Row="1" Background="#112240">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+           
+           
 
             <Grid Grid.Column="0" Margin="10">
                 <StackPanel>
-                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Padding="10,5" Margin="0,0,0,10">
-                        <TextBlock x:Name="StatsLabel" Text="Your Stats" FontFamily="{StaticResource OswaldFont}" FontSize="16"/>
+                    <Border BorderBrush="#3C205E" BorderThickness="1" HorizontalAlignment="Left" Padding="10,5" Margin="0,0,0,10">
+                        <TextBlock x:Name="StatsLabel" Text="Your Stats" Foreground="White" FontFamily="{StaticResource OswaldFont}" FontSize="16" />
                     </Border>
 
-                    <Grid>
+                    <Grid Background="#112240">
                         <Canvas x:Name="StatsCanvas" Height="250">
                             <Path x:Name="GraphPath" Stroke="#6A309D" StrokeThickness="3"/>
                         </Canvas>

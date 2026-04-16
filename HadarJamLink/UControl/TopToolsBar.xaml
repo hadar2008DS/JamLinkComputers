@@ -44,43 +44,4 @@
 
     </UserControl.Resources>
 
-    <!-- Container -->
-    <!--<Border Background="White"
-            CornerRadius="0 0 18 18"
-            Padding="0"
-            Effect="{StaticResource SoftShadow}">
-
-        <DockPanel>
-
-            --><!-- Title --><!--
-            <TextBlock Text="Tools"
-                       DockPanel.Dock="Left"
-                       FontSize="18"
-                       FontWeight="Bold"
-                       Margin="8 0 20 0"/>
-
-            --><!-- Buttons --><!--
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right">
-
-                <Button Content=" Tuner"
-                        Style="{StaticResource ToolButtonStyle}"
-                        Click="Tuner_Click"/>
-
-                <Button Content="🎼 Scales"
-                        Style="{StaticResource ToolButtonStyle}"
-                        Click="Scales_Click"/>
-
-                <Button Content="🎹 Chords"
-                        Style="{StaticResource ToolButtonStyle}"
-                        Click="Chords_Click"/>
-
-                <Button Content="⏱ Metronome"
-                        Style="{StaticResource ToolButtonStyle}"
-                        Click="Metronome_Click"/>
-
-            </StackPanel>
-
-        </DockPanel>
-    </Border>-->
 </UserControl>

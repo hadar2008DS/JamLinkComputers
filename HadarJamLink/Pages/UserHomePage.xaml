@@ -21,7 +21,7 @@
         <Border x:Name="SideBar"
             Grid.RowSpan="2"
             Grid.Column="0"
-            Background="White"
+            Background="#112240"
             Padding="8"
             VerticalAlignment="Stretch">
 
@@ -49,19 +49,18 @@
                 Background="#1A1A2E"
                     >
             <TabItem Header=" Tools" FontFamily="{StaticResource OswaldFont}">
-                
-                <StackPanel Orientation="Horizontal">
 
-                    <Button Content="Tuner" Click="Tuner_Click" FontFamily="{StaticResource OswaldFont}"/>
-                    <Button Content="Scales" Click="Scales_Click" FontFamily="{StaticResource OswaldFont}"/>
-                    <Button Content="Chords" Click="Chords_Click" FontFamily="{StaticResource OswaldFont}"/>
-                    <Button Content="Metronome" Click="Metronome_Click" FontFamily="{StaticResource OswaldFont}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Content="Tuner" Style="{StaticResource ToolButtonStyle}" Click="Tuner_Click"/>
+                    <Button Content="Scales" Style="{StaticResource ToolButtonStyle}" Click="Scales_Click"/>
+                    <Button Content="Chords" Style="{StaticResource ToolButtonStyle}" Click="Chords_Click"/>
+                    <Button Content="Metronome" Style="{StaticResource ToolButtonStyle}" Click="Metronome_Click"/>
                 </StackPanel>
             </TabItem>
 
             <TabItem Header="Help" FontFamily="{StaticResource OswaldFont}">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Tips" Click="Tips_Click"/>
+                    <Button Content="Tips" Style="{StaticResource ToolButtonStyle}" Click="Tips_Click"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
