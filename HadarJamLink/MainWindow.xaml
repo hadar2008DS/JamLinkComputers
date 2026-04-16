@@ -5,12 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HadarJamLink"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" 
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen" >
     <Grid  Background="#112240">
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"
-        Source="Pages/LogInPage.xaml"
-        />
-        
-
+        <Frame x:Name="MainFrame" Source="SplashScreenPage.xaml" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
