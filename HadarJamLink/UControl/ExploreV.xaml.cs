@@ -91,46 +91,60 @@ namespace JamLinkComputers.UControl
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        string query = SearchBox.Text.ToLower();
-        UsersCardsList.ItemsSource = allUsers
-            .Where(u => u.Username.ToLower().Contains(query))
-            .ToList();
-    }
+        {
+            string query = SearchBox.Text.ToLower();
+            UsersCardsList.ItemsSource = allUsers
+                .Where(u => u.Username.ToLower().Contains(query))
+                .ToList();
+        }
 
         private void ViewProfile_Click(object sender, RoutedEventArgs e)
         {
             // 1. חילוץ המשתמש שנבחר מהכפתור
             if (sender is Button btn && btn.DataContext is Person selectedUser)
             {
-                // 2. מציאת החלון הראשי בצורה מפורשת (בלי dynamic)
+                // 2. מציאת החלון הראשי בצורה מפורשת בלי dynamic
                 var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
 
-                if (mainWindow != null)
+                // Prefer using the app's MainFrame if available
+                if (mainWindow?.MainFrame != null)
                 {
-                    // 3. ניווט באמצעות ה-Frame
+                    // 3. ניווט באמצעות ה Frame
                     mainWindow.MainFrame.Navigate(new PublicProfileV(selectedUser, this.currentUser));
+                    return;
                 }
+
+                // Fallback: try navigation service from the control
+                var nav = NavigationService.GetNavigationService(this);
+                if (nav != null)
+                {
+                    nav.Navigate(new PublicProfileV(selectedUser, this.currentUser));
+                    return;
+                }
+
+                // If both are missing, inform or log (avoid throwing)
+                MessageBox.Show("Navigation target not found. Cannot open profile.");
             }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
-            //if (mainWindow != null)
-            //{
-            //    // ניווט מפורש לדף הבית עם המשתמש המחובר
-            //    mainWindow.MainFrame.Navigate(new HomeV(this.currentUser));
 
-            //    // בונוס: ניקוי ההיסטוריה כדי שלא יהיה אפשר לחזור בטעות ל-Explore בלופ
-            //    while (mainWindow.MainFrame.CanGoBack)
-            //    {
-            //        mainWindow.MainFrame.RemoveBackEntry();
-            //    }
-            //}
+            if (mainWindow?.MainFrame != null)
+            {
+                mainWindow.MainFrame.Navigate(new UserHomePage(this.currentUser));
+                return;
+            }
 
-            mainWindow.MainFrame.Navigate(new UserHomePage(this.currentUser));
+            var nav = NavigationService.GetNavigationService(this);
+            if (nav != null)
+            {
+                nav.Navigate(new UserHomePage(this.currentUser));
+                return;
+            }
 
+            MessageBox.Show("Navigation target not found. Cannot go back.");
         }
     }
 }
