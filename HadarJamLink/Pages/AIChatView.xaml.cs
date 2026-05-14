@@ -42,6 +42,7 @@ namespace JamLinkComputers.Pages
             string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath}";
 
             string apiKey = "YOUR_API_KEY_HERE";
+            //Useable API KEY: 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
 
             // Start Engine
             aiEngine = new AIEngine(apiKey, connString);

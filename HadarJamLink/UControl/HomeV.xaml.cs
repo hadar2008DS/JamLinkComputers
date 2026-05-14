@@ -290,14 +290,14 @@ namespace JamLinkComputers.UControl
            
             // If you want to display the chat view, navigate to it or show it in a frame/window.
             // Example: Navigate in MainFrame if available
-            var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
-            if (mainWindow != null)
-            {
-                mainWindow.MainFrame.Navigate(chatWindow);
-            }
+            //var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
+            //if (mainWindow != null)
+            //{
+            //    mainWindow.MainFrame.Navigate(chatWindow);
+            //}
             // Otherwise, you may need to host it in a new Window if that's your intent:
-            // var window = new Window { Content = chatWindow };
-            // window.Show();
+            var window = new Window { Content = chatWindow };
+            window.Show();
         }
         //private async void LoadMusicSegments()
         //{
