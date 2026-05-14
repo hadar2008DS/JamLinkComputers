@@ -359,7 +359,7 @@ namespace JamLinkComputers
         {
             MainContent.Content = new TextBlock
             {
-                Text = "🎶 Helpful music tips",
+                Text = "🎶",
                 FontSize = 24,
                 Margin = new Thickness(20)
             };

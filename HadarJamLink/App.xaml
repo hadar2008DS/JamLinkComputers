@@ -142,7 +142,7 @@
                                Maximum="{TemplateBinding ScrollableWidth}"
                                ViewportSize="{TemplateBinding ViewportWidth}"
                                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                               Height="8" Margin="0,5,0,0">
+                               Height="8">
                                 <ScrollBar.Resources>
                                     <Style TargetType="Thumb">
                                         <Setter Property="Template">
