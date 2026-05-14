@@ -1,6 +1,7 @@
 ﻿using ClientSide;
 using HadarJamLink;
 using JamLinkComputers;
+using JamLinkComputers.Pages;
 using Microsoft.VisualBasic.Logging;
 using Model;
 using System;
@@ -195,6 +196,7 @@ namespace JamLinkComputers.UControl
             }
         }
 
+
         //private void CreateLegend(List<LegendItem> items)
         //{
         //    StackPanel legend = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(10, 210, 0, 0) };
@@ -280,6 +282,22 @@ namespace JamLinkComputers.UControl
         {
             //LoadMusicSegments();
             //LoadGroups();
+        }
+
+        private void AIAssistantButton_Click(object sender, RoutedEventArgs e)
+        {
+            AIChatView chatWindow = new AIChatView();
+           
+            // If you want to display the chat view, navigate to it or show it in a frame/window.
+            // Example: Navigate in MainFrame if available
+            var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
+            if (mainWindow != null)
+            {
+                mainWindow.MainFrame.Navigate(chatWindow);
+            }
+            // Otherwise, you may need to host it in a new Window if that's your intent:
+            // var window = new Window { Content = chatWindow };
+            // window.Show();
         }
         //private async void LoadMusicSegments()
         //{

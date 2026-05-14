@@ -54,6 +54,24 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
+                        <Button x:Name="AIAssistantButton" Content="JamLink AI ✨" 
+        HorizontalAlignment="Right" VerticalAlignment="Top"
+        Margin="0,-45,180,0" 
+        Padding="12,6" Foreground="White" 
+        FontWeight="Bold" Cursor="Hand" Click="AIAssistantButton_Click">
+                            <Button.Background>
+                                
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#6A309D" Offset="0.0"/>
+                                    <GradientStop Color="#4A148C" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="15"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
                     </Grid>
                 </StackPanel>
             </Grid>
