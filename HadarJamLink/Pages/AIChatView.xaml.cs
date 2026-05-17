@@ -30,7 +30,8 @@ namespace JamLinkComputers.Pages
         //              + System.IO.Path.GetFullPath(System.Reflection.Assembly.GetExecutingAssembly().Location
         //              + "/../../../../../ViewModel/JamLinkAccessDB.accdb");
 
-       
+
+        //API KEY from Groq: https://console.groq.com/settings/billing/plans
         public AIChatView()
         {
             InitializeComponent();
@@ -41,8 +42,8 @@ namespace JamLinkComputers.Pages
                            + "/../../../../../ViewModel/JamLinkAccessDB.accdb");
             string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath}";
 
-            string apiKey = "YOUR_API_KEY_HERE";
-            //Useable API KEY: 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
+            string apiKey = "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";
+            //Unuseable API KEY: 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
 
             // Start Engine
             aiEngine = new AIEngine(apiKey, connString);
@@ -65,7 +66,7 @@ namespace JamLinkComputers.Pages
             string userText = TxtUserInput.Text.Trim();
             if (string.IsNullOrEmpty(userText)) return;
 
-            // הוספת הודעת משתמש
+            // הוספת הודעת המשתמש למסך
             Messages.Add(new ChatMessage
             {
                 Message = userText,
@@ -77,10 +78,10 @@ namespace JamLinkComputers.Pages
 
             try
             {
-                // שימוש בשם הפעולה הנכון שקיים ב-DLL שלך
-                string response = await aiEngine.ProcessQueryAsync(userText);
+                // קריאה לפעולה הנכונה ב-DLL
+                string response = await aiEngine.SendMessageAsync(userText);
 
-                // הוספת תשובת ה-AI
+                // הצגת תשובת האג'נט שחזר מה-DLL
                 Messages.Add(new ChatMessage
                 {
                     Message = response,
@@ -90,7 +91,7 @@ namespace JamLinkComputers.Pages
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("שגיאה: " + ex.Message);
+                System.Windows.MessageBox.Show("שגיאה בתקשורת: " + ex.Message);
             }
 
             ChatScrollViewer.ScrollToBottom();

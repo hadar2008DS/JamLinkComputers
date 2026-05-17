@@ -28,7 +28,7 @@
       <HintPath>..\..\JamLink\ClientSide\bin\Debug\net8.0\Model.dll</HintPath>
     </Reference>
     <Reference Include="MyAIAgent">
-      <HintPath>..\..\..\MyAIAgent\MyAIAgent\bin\Debug\net8.0\MyAIAgent.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\MyAIAgent.dll</HintPath>
     </Reference>
   </ItemGroup>
 
