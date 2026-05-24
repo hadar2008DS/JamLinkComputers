@@ -1,5 +1,6 @@
 ﻿using ClientSide;
 using HadarJamLink;
+using JamLinkComputers.UControl;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,9 @@ namespace JamLinkComputers.Pages
         public static List<Model.Producer> allProducers = new List<Model.Producer>();
         public static List<Model.Instruments> allInstruments = new List<Model.Instruments>();
         public static List<Model.MusicianInstruments> MusicianInstrumentLinks = new List<Model.MusicianInstruments>();
-        private int groupId; // assuming this is where the current group ID is stored 
+        private int groupId; // assuming this is where the current group ID is stored
+        private Model.Group currentGroup;
+        private Model.Person currentUser;
         private ApiService apiService = new ApiService();
         public GroupDetailsPage(int groupId)
         {
@@ -101,11 +104,14 @@ namespace JamLinkComputers.Pages
                 }
             }
 
+           
             // Return the combined or specific role string
             if (isMusician && isProducer) return "Musician & Producer";
             if (isMusician) return "Musician";
             if (isProducer) return "Producer";
             return "Member";
+
+            //WorkspaceButton.IsEnabled = true;
         }
 
 
@@ -125,16 +131,51 @@ namespace JamLinkComputers.Pages
             }
         }
 
-        private void ProjectWorkspace_Click(object sender, RoutedEventArgs e)
+        private async void ProjectWorkspace_Click(object sender, RoutedEventArgs e)
         {
-            // מעבר לעמוד מרכז הפרויקטים
-            // כאן אנחנו מעבירים את ה-ID של הקבוצה הנוכחית
-            //var workspacePage = new GroupProjectWorkspaceV(this.groupId);
-
-            var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
-            if (mainWindow?.MainFrame.Content is UserHomePage homePage)
+            if (this.currentGroup == null)
             {
-                //homePage.LoadView(workspacePage);
+                try
+                {
+                    var groups = await apiService.GetGroups();
+                    this.currentGroup = groups.FirstOrDefault(g => g.Id == this.groupId)
+                                        ?? new Model.Group { Id = this.groupId, GroupName = "Group Details" };
+                }
+                catch
+                {
+                    this.currentGroup = new Model.Group { Id = this.groupId, GroupName = "Group Details" };
+                }
+            }
+
+            if (this.currentUser == null)
+            {
+                // שליפת המשתמש הראשון מחברי הקבוצה כגיבוי, או יצירת משתמש זמני
+                if (MembersList.ItemsSource is List<Model.Person> people && people.Any())
+                {
+                    this.currentUser = people.First();
+                }
+                else
+                {
+                    this.currentUser = new Model.Person { Id = 1, Username = "Musician User" };
+                }
+            }
+
+            // 2. יצירת עמוד ה-Workspace החדש
+            var workspacePage = new ProjectWorkspaceV(this.currentGroup, this.currentUser);
+
+            // 3. התיקון המדויק למציאת ה-UserHomePage והפעלת LoadView
+            // אנחנו סורקים את ה-MainWindow ומחפשים בתוך ה-MainFrame שלו את עמוד הבית הנוכחי
+            var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
+
+            if (mainWindow != null && mainWindow.MainFrame.Content is UserHomePage homePage)
+            {
+                // קריאה לפונקציה המקורית שלך שטוענת את ה-UserControl/Page לתוך הפאנל המרכזי
+                homePage.LoadView(workspacePage);
+            }
+            else
+            {
+                // גיבוי למקרה שמבנה המסכים שונה - ניווט ישיר בפריים הראשי
+                this.NavigationService?.Navigate(workspacePage);
             }
         }
 

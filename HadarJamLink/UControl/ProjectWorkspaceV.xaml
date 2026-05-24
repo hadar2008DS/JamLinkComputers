@@ -1,0 +1,194 @@
+﻿<UserControl x:Class="JamLinkComputers.UControl.ProjectWorkspaceV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JamLinkComputers.UControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20" Background="#0A192F">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Tasks:" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <Border Grid.Row="1" Background="#F1C40F" CornerRadius="20" Padding="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock Text="Pending:" Foreground="#0A192F" FontSize="16" FontWeight="Bold" Margin="0,0,0,8"/>
+                            <ItemsControl x:Name="PendingTasksControl" Margin="0,0,0,20">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#112240" Margin="0,0,0,8" CornerRadius="8" Padding="10">
+                                            <DockPanel>
+                                                <CheckBox IsChecked="{Binding IsCompleted}" Click="TaskStatus_Changed" VerticalAlignment="Center" Margin="0,0,10,0" Cursor="Hand"/>
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Title}" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="{Binding AssignedTo}" Foreground="#8892B0" FontSize="11" Margin="0,2,0,0"/>
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock Text="Completed:" Foreground="#0A192F" FontSize="16" FontWeight="Bold" Margin="0,0,0,8"/>
+                            <ItemsControl x:Name="CompletedTasksControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#1D2D50" Margin="0,0,0,8" CornerRadius="8" Padding="10" Opacity="0.6">
+                                            <DockPanel>
+                                                <CheckBox IsChecked="{Binding IsCompleted}" Click="TaskStatus_Changed" VerticalAlignment="Center" Margin="0,0,10,0" Cursor="Hand"/>
+                                                <TextBlock Text="{Binding Title}" Foreground="#8892B0" FontSize="14" TextDecorations="Strikethrough" VerticalAlignment="Center"/>
+                                            </DockPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Button Grid.Row="1" Content="+ Add Task" Click="AddTask_Click" Background="#0A192F" Foreground="White" FontWeight="Bold" Height="35" Cursor="Hand" Margin="0,10,0,0">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.8*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Suggestion board:" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <Border Grid.Row="1" Background="#4172CD" CornerRadius="20" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
+                            <ItemsControl x:Name="SuggestionsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#00D2FF" CornerRadius="12" Padding="10" Margin="0,0,0,8" HorizontalAlignment="Left" MaxWidth="400">
+                                            <StackPanel>
+                                                <DockPanel>
+                                                    <TextBlock Text="{Binding AuthorName}" FontSize="12" FontWeight="Bold" Foreground="#0A192F"/>
+                                                    <TextBlock Text="{Binding DatePosted, StringFormat=\{0:HH:mm\}}" FontSize="10" Foreground="#555555" Margin="15,0,0,0" HorizontalAlignment="Right"/>
+                                                </DockPanel>
+                                                <TextBlock Text="{Binding Content}" FontSize="14" Foreground="#0A192F" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <DockPanel Grid.Row="1">
+                            <Button Content="Send" Click="PostSuggestion_Click" Background="#0A192F" Foreground="White" FontWeight="Bold" Width="70" Height="35" DockPanel.Dock="Right" Margin="10,0,0,0" Cursor="Hand">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <TextBox x:Name="NewSuggestionTextBox" Background="#112240" Foreground="White" BorderThickness="0" Height="35" VerticalContentAlignment="Center" Padding="10,0" FontSize="14">
+                                <TextBox.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                        </DockPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Project in line:" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <Border Grid.Row="1" Background="#6A309D" CornerRadius="20" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="CurrentTrackTextBlock" Grid.Row="0" Text="🎵 Current Track: Loading..." Foreground="White" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+
+                        <ProgressBar x:Name="ProjectProgressBar" Grid.Row="1" Value="0" Height="8" Background="#1D2D50" Foreground="#00D2FF" BorderThickness="0" Margin="0,0,0,10">
+                            <ProgressBar.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="4"/>
+                                </Style>
+                            </ProgressBar.Resources>
+                        </ProgressBar>
+
+                        <ListBox x:Name="NextTracksListBox" Grid.Row="2" Background="Transparent" BorderThickness="0" Margin="0,5,0,5">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="⏳ Next in line: " Foreground="#A29BFE" FontSize="13" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding}" Foreground="White" FontSize="13"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <UniformGrid Grid.Row="3" Columns="2" Margin="0,5,0,0">
+                            <Button Content="+ Add to Queue" Click="AddProjectToQueue_Click" Background="#0A192F" Foreground="White" FontWeight="Bold" Height="32" Margin="0,0,5,0" Cursor="Hand">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button Content="✓ Finish &amp; Next" Click="NextProject_Click" Background="#00D2FF" Foreground="#0A192F" FontWeight="Bold" Height="32" Margin="5,0,0,0" Cursor="Hand">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </UniformGrid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

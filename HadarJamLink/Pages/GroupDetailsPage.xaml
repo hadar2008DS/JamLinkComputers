@@ -31,7 +31,7 @@
                                FontSize="28" FontWeight="Bold" VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <Button Content="Project Workspace" 
+                <Button x:Name="WorkspaceButton" Content="Project Workspace" 
                         Click="ProjectWorkspace_Click"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
