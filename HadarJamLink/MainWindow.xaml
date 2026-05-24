@@ -9,6 +9,6 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen" >
     <Grid  Background="#112240">
-        <Frame x:Name="MainFrame" Source="SplashScreenPage.xaml" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="MainFrame" Source="SplashScreenPage.xaml" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

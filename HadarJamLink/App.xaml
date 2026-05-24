@@ -197,5 +197,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="Frame">
+            <Setter Property="NavigationUIVisibility" Value="Hidden"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        
     </Application.Resources>
 </Application>

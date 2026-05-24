@@ -21,6 +21,10 @@ namespace HadarJamLink
         {
             InitializeComponent();
             //NavigationService.Navigate(new Uri("SplashScreenPage.xaml", UriKind.Relative));
+           
         }
+
+        
     }
+    
 }
