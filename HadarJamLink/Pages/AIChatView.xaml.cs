@@ -42,11 +42,8 @@ namespace JamLinkComputers.Pages
                            + "/../../../../../ViewModel/JamLinkAccessDB.accdb");
             string connString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath}";
 
-            string apiKey = "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";
-            //Unuseable API KEY: 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
-
             // Start Engine
-            aiEngine = new AIEngine(apiKey, connString);
+            aiEngine = new AIEngine(connString);
         }
         private async void BtnSend_Click(object sender, RoutedEventArgs e)
         {
