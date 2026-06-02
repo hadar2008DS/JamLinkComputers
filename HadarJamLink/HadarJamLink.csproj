@@ -1,0 +1,5 @@
+<ItemGroup>
+	<None Include="ApetureInstrumentals.mp3">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+</ItemGroup>

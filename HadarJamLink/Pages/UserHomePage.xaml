@@ -39,6 +39,32 @@
                     Content="Create Project"
                     Height="36"
                     Visibility="Collapsed"/>
+
+                <!-- Mute control added to the bottom of the sidebar -->
+                <Grid Background="#0A192F" Width="52" HorizontalAlignment="Left" Margin="0,10,0,0" Height="38">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="1" Margin="10,20,10,10">
+                    </StackPanel>
+
+                    <Button x:Name="MuteButton" 
+                            Grid.Row="2" 
+                            Click="MuteButton_Click"
+                            Background="Transparent" 
+                            BorderThickness="0" 
+                            Margin="0,0,0,30" 
+                            HorizontalAlignment="Center" 
+                            Cursor="Hand"
+                            ToolTip="Mute/Unmute Audio">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock x:Name="MuteIcon" Text="🔊" Foreground="#00D2FF" FontSize="24" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
             </StackPanel>
         </Border>
 
@@ -64,6 +90,8 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
+
+
 
         <!-- ================= MAIN CONTENT ================= -->
         <ContentControl x:Name="MainContent"

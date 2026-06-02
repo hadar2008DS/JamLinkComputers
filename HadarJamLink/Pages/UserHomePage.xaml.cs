@@ -2,11 +2,14 @@
 using JamLinkComputers.UControl;
 using Model;
 using System;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace JamLinkComputers
 {
@@ -25,11 +28,13 @@ namespace JamLinkComputers
         private ScalesControl ScalesInstance;
         private ExploreV ExploreInstance;
 
-
+        private MediaPlayer backgroundPlayer = new MediaPlayer();
+        private bool isMuted = false;
 
         public UserHomePage(Person user)
         {
             InitializeComponent();
+            InitializeBackgroundAudio();
 
             //// שומרים את שם המשתמש זמנית ב־Application
             //Application.Current.Properties["username"] = user.Username;
@@ -285,11 +290,11 @@ namespace JamLinkComputers
         {
             MainContent.Content = view;
         }
-        private void ProducerBtn_Click(object sender, RoutedEventArgs e){}
+        private void ProducerBtn_Click(object sender, RoutedEventArgs e) { }
 
-        private void MusicianBtn_Click(object sender, RoutedEventArgs e){}
+        private void MusicianBtn_Click(object sender, RoutedEventArgs e) { }
 
-        private void SideBarBTN_Loaded(object sender, RoutedEventArgs e) {}
+        private void SideBarBTN_Loaded(object sender, RoutedEventArgs e) { }
 
         private UIElement CreateTunerView()
         {
@@ -301,7 +306,7 @@ namespace JamLinkComputers
 
         private UIElement CreateScalesView()
         {
-            
+
             if (ScalesInstance == null)
                 ScalesInstance = new ScalesControl();
 
@@ -320,7 +325,7 @@ namespace JamLinkComputers
         {
             if (metronomeInstance == null)
                 metronomeInstance = new MetronomeControl();
-            
+
             return metronomeInstance;
         }
         private UIElement CreateExploreView()
@@ -371,6 +376,62 @@ namespace JamLinkComputers
                 SideBarColumn.Width = new GridLength(0); // Close fully
             else
                 SideBarColumn.Width = new GridLength(120); // Open
+        }
+
+
+
+        private void InitializeBackgroundAudio()
+        {
+            try
+            {
+                // שימוש ב-Path.Combine המומלץ לבניית נתיב יציב ומדויק
+                string audioPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "ApetureInstrumentals.wav");
+
+                // בדיקה בדיבאגר (Output) האם הקובץ באמת קיים פיזית בנתיב הריצה
+                if (!System.IO.File.Exists(audioPath))
+                {
+                    System.Diagnostics.Debug.WriteLine(" Audio file missing at: " + audioPath);
+                    return;
+                }
+
+                backgroundPlayer.Open(new Uri(audioPath, UriKind.Absolute));
+
+                // יצירת לופ אוטומטי - כשהשיר מסתיים, חוזרים להתחלה ומנגנים שוב
+                backgroundPlayer.MediaEnded += (s, e) =>
+                {
+                    backgroundPlayer.Position = TimeSpan.Zero;
+                    backgroundPlayer.Play();
+                };
+
+                backgroundPlayer.Volume = 0.5; // ווליום של 50%
+                backgroundPlayer.Play();       // הפעלה מידית
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(" Audio load error: " + ex.Message);
+            }
+        }
+
+        private void MuteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (backgroundPlayer == null) return;
+
+            if (!isMuted)
+            {
+                backgroundPlayer.IsMuted = true; // השתקה מובנית של הנגן
+                isMuted = true;
+
+                MuteIcon.Text = "🔇";
+                MuteIcon.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8892B0"));
+            }
+            else
+            {
+                backgroundPlayer.IsMuted = false; // ביטול השתקה
+                isMuted = false;
+
+                MuteIcon.Text = "🔊";
+                MuteIcon.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00D2FF"));
+            }
         }
     }
 }
