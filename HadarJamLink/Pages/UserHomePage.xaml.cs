@@ -109,7 +109,6 @@ namespace JamLinkComputers
                     LoadView(new ProducerV(currentUser));
                     break;
                 case "Explore":
-                    // שימי לב שאנחנו קוראים לפונקציה שיוצרת/מחזירה את האקספלור
                     MainContent.Content = CreateExploreView();
                     break;
             }
@@ -186,19 +185,97 @@ namespace JamLinkComputers
             MainContent.Content = CreateMetronomeView();
         }
 
-        private void Explore_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = CreateExploreView();
-        }
-
         private void Tips_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new TextBlock
+            Grid mainGrid = new Grid { Margin = new Thickness(0) }; 
+            mainGrid.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF112240"));
+            mainGrid.Children.Add(new Border { Padding = new Thickness(30) });
+            mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            var titleFont = new FontFamily("Segoe UI Bold");
+            var textFont = new FontFamily("Segoe UI Semibold");
+            var cyanBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00D2FF"));
+            var cardBg = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0A192F"));
+
+            // ================= הטור של המוזיקאים =================
+            StackPanel musicianPanel = new StackPanel { Margin = new Thickness(15) };
+            musicianPanel.Children.Add(new TextBlock
             {
-                Text = "🎶",
-                FontSize = 24,
-                Margin = new Thickness(20)
+                Text = "🎸 FOR MUSICIANS",
+                FontSize = 22,
+                FontFamily = titleFont,
+                Foreground = cyanBrush,
+                Margin = new Thickness(0, 0, 0, 20)
+            });
+
+            string[] musicianTips = {
+                    " Use the Metronome to practice complex riffs slowly, then speed up gradually. 🥁",
+                    " Record your practice sessions! It is the best way to catch timing and pitch errors. 📱",
+                    " Protect your ears. Always use musician earplugs during loud rehearsals. 🎧",
+                    " Master your scales. It is the absolute key to fluent and effortless improvisation. 🎹",
+                    " Warm up for at least 5-10 minutes before singing or playing to prevent injuries. 🎤"
+                };
+
+            foreach (var tip in musicianTips)
+            {
+                Border card = CreateTipCard(tip, textFont, cardBg);
+                musicianPanel.Children.Add(card);
+            }
+            Grid.SetColumn(musicianPanel, 0);
+            mainGrid.Children.Add(musicianPanel);
+            // ================= הטור של המפיקים =================
+            StackPanel producerPanel = new StackPanel { Margin = new Thickness(15) };
+            producerPanel.Children.Add(new TextBlock
+            {
+                Text = "🎛️ FOR PRODUCERS",
+                FontSize = 22,
+                FontFamily = titleFont,
+                Foreground = cyanBrush,
+                Margin = new Thickness(0, 0, 0, 20)
+            });
+
+            string[] producerTips = {
+                " Trust your ears, not just your eyes. Don't over-rely on visual EQ analyzers. 👁️",
+                " Mix at lower volumes to avoid ear fatigue and get a better balance of the levels. 📉",
+                " Clear the mud! Use a High-Pass Filter (HPF) on non-bass tracks to free up headroom. 🧹",
+                " Organization is key. Color-code your tracks and name them properly before mixing. 🎨",
+                " Take regular breaks. 5 minutes away from the monitors can completely refresh your mix perspective. ☕"
             };
+
+            foreach (var tip in producerTips)
+            {
+                Border card = CreateTipCard(tip, textFont, cardBg);
+                producerPanel.Children.Add(card);
+            }
+            Grid.SetColumn(producerPanel, 1);
+            mainGrid.Children.Add(producerPanel);
+
+            MainContent.Content = mainGrid;
+        }
+
+        private Border CreateTipCard(string text, FontFamily font, Brush background)
+        {
+            Border border = new Border
+            {
+                Background = background, 
+                CornerRadius = new CornerRadius(8),
+                Padding = new Thickness(15),
+                Margin = new Thickness(0, 0, 0, 12),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#222244")),
+                BorderThickness = new Thickness(1)
+            };
+
+            border.Child = new TextBlock
+            {
+                Text = text,
+                FontSize = 15,
+                Foreground = Brushes.White,
+                FontFamily = font,
+                TextWrapping = TextWrapping.Wrap,
+                LineHeight = 22
+            };
+
+            return border;
         }
 
         private void ToggleSideBar_Click(object sender, RoutedEventArgs e)
