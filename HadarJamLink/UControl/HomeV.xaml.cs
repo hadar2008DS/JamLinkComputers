@@ -197,87 +197,6 @@ namespace JamLinkComputers.UControl
         }
 
 
-        //private void CreateLegend(List<LegendItem> items)
-        //{
-        //    StackPanel legend = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(10, 210, 0, 0) };
-        //    foreach (var item in items)
-        //    {
-        //        StackPanel entry = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 0, 15, 0) };
-        //        entry.Children.Add(new Rectangle { Width = 10, Height = 10, Fill = item.Color });
-        //        entry.Children.Add(new TextBlock { Text = item.Name, Foreground = Brushes.Gray, Margin = new Thickness(5, 0, 0, 0), FontSize = 10 });
-        //        legend.Children.Add(entry);
-        //    }
-        //    StatsCanvas.Children.Add(legend);
-        //}
-
-
-
-        //private void DrawDataLine(int count, Brush color, int offset)
-        //{
-        //    // Define the progression of the line (X, Y coordinates)
-        //    // X goes from 0 to 300; Y is determined by your database count
-        //    double peakY = 200 - (count * 12);
-        //    if (peakY < 20) peakY = 20; // Keep it within view
-
-        //    Polyline graphLine = new Polyline
-        //    {
-        //        Stroke = color,
-        //        StrokeThickness = 3,
-        //        StrokeLineJoin = PenLineJoin.Round, // Makes the corners smooth
-        //        Points = new PointCollection
-        //{
-        //    new Point(0, 190),            // Start (Baseline)
-        //    new Point(50, 170),           // Step 1
-        //    new Point(150 + offset, peakY),// Step 2 (Your actual DB Stat)
-        //    new Point(250, 160),          // Step 3
-        //    new Point(350, 185)           // End
-        //}
-        //    };
-
-        //    // Add a glow effect to make it pop against the navy background
-        //    graphLine.Effect = new System.Windows.Media.Effects.DropShadowEffect
-        //    {
-        //        Color = ((SolidColorBrush)color).Color,
-        //        BlurRadius = 15,
-        //        ShadowDepth = 0,
-        //        Opacity = 0.7
-        //    };
-
-        //    StatsCanvas.Children.Add(graphLine);
-        //}
-
-
-
-        //private async void LoadCards()
-        //{
-        //    // ניקוי ה-WrapPanel לפני הטעינה (למקרה של רענון)
-        //    CardViews.Children.Clear();
-
-        //    // 1. הוספת קבוצות (Groups)
-        //    DataTable groupsTable = apiService.GetGroups();
-        //    foreach (DataRow row in groupsTable.Rows)
-        //    {
-        //        var card = new CardViews();
-        //        card.TxtTitle.Text = row["GroupName"].ToString();
-        //        card.TxtInfo.Text = "Created: " + row["CreationDate"].ToString();
-        //        card.TxtType.Text = "Group";
-
-        //        // הוספה ל-WrapPanel שכתבת ב-XAML
-        //        CardViews.Children.Add(card);
-        //    }
-
-        //    // 2. הוספת קטעי מוזיקה (Musical Segments)
-        //    DataTable segmentsTable = apiService.GetMusicalSegments();
-        //    foreach (DataRow row in segmentsTable.Rows)
-        //    {
-        //        var card = new CardViews();
-        //        card.TxtTitle.Text = row["SegmentName"].ToString();
-        //        card.TxtInfo.Text = row["Genre"].ToString() + " | " + row["BPM"].ToString() + " BPM";
-        //        card.TxtType.Text = "Music";
-
-        //        CardViews.Children.Add(card);
-        //    }
-        //}
         private void LoadHomeFeed()
         {
             //LoadMusicSegments();
@@ -287,72 +206,10 @@ namespace JamLinkComputers.UControl
         private void AIAssistantButton_Click(object sender, RoutedEventArgs e)
         {
             AIChatView chatWindow = new AIChatView();
-           
-            // If you want to display the chat view, navigate to it or show it in a frame/window.
-            // Example: Navigate in MainFrame if available
-            //var mainWindow = Window.GetWindow(this) as HadarJamLink.MainWindow;
-            //if (mainWindow != null)
-            //{
-            //    mainWindow.MainFrame.Navigate(chatWindow);
-            //}
-            // Otherwise, you may need to host it in a new Window if that's your intent:
             var window = new Window { Content = chatWindow };
             window.Show();
         }
-        //private async void LoadMusicSegments()
-        //{
-        //    AppsList aList = await apiService.GetApps();
-        //    foreach (var a in aList) {
-        //        TextBlock tbApp = new TextBlock
-        //        {
-        //            Text = " " + a.AppName,
-        //            Foreground = Brushes.White,
-        //            Margin = new Thickness(0, 5, 0, 0)
-        //        };
-        //        AppsContainer.Children.Add(tbApp);
-        //    }
-
-        //    SegmentsContainer.Children.Clear();
-
-        //    MusicalSegmentsList allSegments = await apiService.GetMusicalSegments();
-        //    foreach (var segment in allSegments)
-        //    {
-        //        TextBlock tb = new TextBlock
-        //        {
-        //            Text = " " + segment.SegmentName,
-        //            Foreground = Brushes.White,
-        //            Margin = new Thickness(0, 5, 0, 0)
-        //        };
-
-        //        SegmentsContainer.Children.Add(tb);
-        //    }
-        //}
-        //private void LoadGroups()
-        //{
-        //    GroupsContainer.Children.Clear();
-
-        //    // Example: groups that the user is part of
-        //    int currentUserId = CurrentUser.Id;
-
-        //    // Assuming you have a collection of groups, e.g., Model.GroupList AllGroups
-        //    var userGroups = Model.Group
-        //        .Where(g => g.Members.Any(m => m.UserId == currentUserId))
-        //        .OrderByDescending(g => g.CreatedAt)
-        //        .Take(5);
-
-        //    foreach (var group in userGroups)
-        //    {
-        //        TextBlock tb = new TextBlock
-        //        {
-        //            Text = " " + group.GroupName,
-        //            Foreground = Brushes.White,
-        //            Margin = new Thickness(0, 5, 0, 0)
-        //        };
-
-        //        GroupsContainer.Children.Add(tb);
-        //    }
-        //}
-
+       
     }
 
     // 1. Helper class to avoid Tuple errors entirely
